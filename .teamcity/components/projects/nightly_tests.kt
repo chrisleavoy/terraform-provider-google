@@ -10,18 +10,18 @@ import generated.ServicesList
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 
-//val NightlyTestsProjectId = RelativeId("NightlyTests")
+val NightlyTestsProjectId = RelativeId("NightlyTests")
 
 fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
     // Create build configs for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, vcsRoot, config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId.toString(), vcsRoot, config)
 
 //    val postSweeperConfig = SweeperBuildConfiguration() // TODO
 
     return Project {
-        id("NightlyTests")
+        id = NightlyTestsProjectId
         name = "Nightly Tests"
         description = "A project connected to the hashicorp/terraform-provider-${ProviderName} repository, where scheduled nightly tests run and users can trigger ad-hoc builds"
 

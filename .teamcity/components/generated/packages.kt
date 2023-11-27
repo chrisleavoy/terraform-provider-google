@@ -1,12 +1,7 @@
-/*
- * Copyright (c) HashiCorp, Inc.
- * SPDX-License-Identifier: MPL-2.0
- */
+package generated
 
 // this file is auto-generated with mmv1, any changes made here will be overwritten
-
-
-var packages = mapOf(
+var PackagesList = mapOf(
     "envvar" to mapOf(
         "name" to "envvar",
         "displayName" to "Environment Variables",
@@ -49,7 +44,7 @@ var packages = mapOf(
     )
 )
 
-var sweepers = mapOf(
+var SweepersList = mapOf(
     "sweeper" to mapOf(
         "name" to "sweeper",
         "displayName" to "Sweeper",

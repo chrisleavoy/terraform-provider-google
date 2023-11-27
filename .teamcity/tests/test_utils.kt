@@ -9,12 +9,12 @@ package tests
 
 import jetbrains.buildServer.configs.kotlin.AbsoluteId
 
-import ClientConfiguration
+import AccTestConfiguration
 
-fun testConfiguration() : ClientConfiguration {
-    return ClientConfiguration("custId", "org", "org2", "billingAccount", "billingAccount2", "masterBillingAccount", "credentials", "project", "orgDomain", "projectNumber", "region", "serviceAccount", "zone", "firestoreProject", "identityUser")
+fun testConfiguration(): AccTestConfiguration {
+    return AccTestConfiguration("custId", "org", "org2", "billingAccount", "billingAccount2", "masterBillingAccount", "credentials", "project", "orgDomain", "projectNumber", "region", "serviceAccount", "zone", "firestoreProject", "identityUser")
 }
 
-fun testVcsRootId() : AbsoluteId {
+fun testVcsRootId(): AbsoluteId {
     return AbsoluteId("TerraformProviderFoobar")
 }

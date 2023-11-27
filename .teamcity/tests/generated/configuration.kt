@@ -7,15 +7,15 @@
 
 package tests
 
-import Google
+import projects.googleRootProject
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import useTeamCityGoTest
+import builds.UseTeamCityGoTest
 
 class ConfigurationTests {
     @Test
     fun buildShouldFailOnError() {
-        val project = Google("default", "description", testVcsRootId(), "refs/heads/main", testConfiguration())
+        val project = googleRootProject(testConfiguration())
         project.buildTypes.forEach { bt ->
             assertTrue("Build '${bt.id}' should fail on errors!", bt.failureConditions.errorMessage)
         }
@@ -23,7 +23,7 @@ class ConfigurationTests {
 
     @Test
     fun buildShouldHaveGoTestFeature() {
-        val project = Google("default", "description", testVcsRootId(), "refs/heads/main", testConfiguration())
+        val project = googleRootProject(testConfiguration())
         project.buildTypes.forEach{ bt ->
             var exists = false
             bt.features.items.forEach { f ->
@@ -32,7 +32,7 @@ class ConfigurationTests {
                 }
             }
 
-            if (useTeamCityGoTest) {
+            if (UseTeamCityGoTest) {
                 assertTrue("Build %s doesn't have Go Test Json enabled".format(bt.name), exists)
             }
         }

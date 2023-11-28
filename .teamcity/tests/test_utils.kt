@@ -7,9 +7,8 @@
 
 package tests
 
-import jetbrains.buildServer.configs.kotlin.AbsoluteId
-
 import builds.AccTestConfiguration
+import jetbrains.buildServer.configs.kotlin.AbsoluteId
 
 fun testConfiguration(): AccTestConfiguration {
     return AccTestConfiguration("billingAccount", "billingAccount2", "credentials", "custId", "firestoreProject", "identityUser", "masterBillingAccount", "org", "org2", "orgDomain", "project", "projectNumber", "region", "serviceAccount", "zone")

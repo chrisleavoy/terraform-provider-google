@@ -7,10 +7,10 @@
 
 package tests
 
-import projects.googleRootProject
+import builds.UseTeamCityGoTest
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import builds.UseTeamCityGoTest
+import projects.googleRootProject
 
 class ConfigurationTests {
     @Test

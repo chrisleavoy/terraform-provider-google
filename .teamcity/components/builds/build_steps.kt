@@ -1,8 +1,8 @@
 package builds
 
-import jetbrains.buildServer.configs.kotlin.*
-import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
 import DefaultTerraformCoreVersion
+import jetbrains.buildServer.configs.kotlin.BuildSteps
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
 
 // NOTE: this file includes Extensions of the Kotlin DSL class BuildSteps
 // This allows us to reuse code in the config easily, while ensuring the same build steps can be used across builds.

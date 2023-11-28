@@ -1,6 +1,6 @@
 package builds
 
-import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.BuildFeatures
 import jetbrains.buildServer.configs.kotlin.buildFeatures.GolangFeature
 
 // NOTE: this file includes Extensions of the Kotlin DSL class BuildFeature

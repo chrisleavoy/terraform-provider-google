@@ -1,7 +1,7 @@
 package vcs_roots
 
-import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 import ProviderName
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 object HashiCorpVCSRoot: GitVcsRoot({
     name = "https://github.com/hashicorp/terraform-provider-${ProviderName}#refs/heads/main"

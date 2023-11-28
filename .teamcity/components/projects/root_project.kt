@@ -1,8 +1,8 @@
 package projects
 
-import jetbrains.buildServer.configs.kotlin.*
 import builds.AccTestConfiguration
 import builds.readOnlySettings
+import jetbrains.buildServer.configs.kotlin.Project
 
 // googleRootProject returns a root project that contains multiple subprojects for different use cases including:
 // - Nightly tests

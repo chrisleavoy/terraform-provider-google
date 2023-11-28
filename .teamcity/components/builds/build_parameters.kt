@@ -1,9 +1,9 @@
 package builds
 
-import jetbrains.buildServer.configs.kotlin.ParametrizedWithType
-import jetbrains.buildServer.configs.kotlin.ParameterDisplay
-import ProviderName
 import DefaultTerraformCoreVersion
+import ProviderName
+import jetbrains.buildServer.configs.kotlin.ParameterDisplay
+import jetbrains.buildServer.configs.kotlin.ParametrizedWithType
 
 // this file is copied from mmv1, any changes made here will be overwritten
 

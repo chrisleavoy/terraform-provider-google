@@ -1,12 +1,14 @@
 package projects
 
-import jetbrains.buildServer.configs.kotlin.*
 import ProviderName
 import builds.AccTestConfiguration
 import builds.BuildConfigurationsForPackages
 import builds.configureGoogleSpecificTestParameters
 import generated.PackagesList
 import generated.ServicesList
+import jetbrains.buildServer.configs.kotlin.Project
+import jetbrains.buildServer.configs.kotlin.RelativeId
+import jetbrains.buildServer.configs.kotlin.sequential
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 

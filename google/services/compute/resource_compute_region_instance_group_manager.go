@@ -578,6 +578,34 @@ func getRegionalManager(d *schema.ResourceData, meta interface{}) (*compute.Inst
 	return manager, nil
 }
 
+// // The Compute API reorders the `stateful_external_ip` element, putting them in lexical order using their `interface_name` value
+// // This function reorders the data from the API to match the user's Terraform config
+// // Any unexpected elements will be appended to the end of the list
+// func orderInterfacesToMatchConfig(d *schema.ResourceData, manager *compute.InstanceGroupManager) {
+// 	v, ok := d.GetOk("stateful_external_ip")
+// 	if !ok {
+// 		return
+// 	}
+// 	externalIpConfig := v.([]interface{})
+// 	ipOrdering := map[string]int{}
+
+// 	// Record ordering found in config
+// 	for i, v := range externalIpConfig {
+// 		el := v.(map[string]string)
+// 		name := el["interface_name"]
+// 		ipOrdering[name] = i
+// 	}
+
+// 	// Sort API response to match config
+// 	unexpectedIPs := []interface{}
+// 	for k, v := range manager.StatefulPolicy.PreservedState.ExternalIPs {
+// 		v, found := ipOrdering[k]
+// 		if !found {
+// 			unexpectedIPs = append(unexpectedIPs, )
+// 		}
+// 	}
+// }
+
 func waitForInstancesRefreshFunc(f getInstanceManagerFunc, waitForUpdates bool, d *schema.ResourceData, meta interface{}) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		m, err := f(d, meta)
@@ -695,7 +723,7 @@ func resourceComputeRegionInstanceGroupManagerRead(d *schema.ResourceData, meta 
 	if err = d.Set("stateful_internal_ip", flattenStatefulPolicyStatefulInternalIps(manager.StatefulPolicy)); err != nil {
 		return fmt.Errorf("Error setting stateful_internal_ip in state: %s", err.Error())
 	}
-	if err = d.Set("stateful_external_ip", flattenStatefulPolicyStatefulExternalIps(manager.StatefulPolicy)); err != nil {
+	if err = d.Set("stateful_external_ip", flattenStatefulPolicyStatefulExternalIps(d, manager.StatefulPolicy)); err != nil {
 		return fmt.Errorf("Error setting stateful_external_ip in state: %s", err.Error())
 	}
 	// If unset in state set to default value

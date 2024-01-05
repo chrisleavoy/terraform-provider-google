@@ -21,6 +21,7 @@ fun BuildSteps.helloWorld() {
         scriptContent = """
             #!/bin/bash
             echo "Hello World"
+            echo "Shared resource : %teamcity.locks.readLock.Foobar%"
         """.trimIndent()
     })
 }

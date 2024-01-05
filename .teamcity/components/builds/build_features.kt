@@ -17,3 +17,10 @@ fun BuildFeatures.golang() {
         })
     }
 }
+
+
+//fun BuildFeatures.lockPackageValue(lock: SharedResource,  value: String) {
+//    sharedResources {
+//        lockSpecificValue(lock, value)
+//    }
+//}

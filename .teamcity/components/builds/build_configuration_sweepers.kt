@@ -3,6 +3,7 @@ package builds
 import DefaultBuildTimeoutDuration
 import DefaultParallelism
 import jetbrains.buildServer.configs.kotlin.BuildType
+import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 

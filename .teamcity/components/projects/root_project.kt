@@ -11,7 +11,7 @@ fun googleRootProject(config: AccTestConfiguration): Project {
 
     return Project{
 
-        description = "foobar"
+        description = "A test project created by the refactored config code in https://github.com/hashicorp/terraform-provider-google/tree/teamcity-refactor"
 
         // Registry the VCS roots used by child projects on the root proejct
         vcsRoot(vcs_roots.HashiCorpVCSRoot)

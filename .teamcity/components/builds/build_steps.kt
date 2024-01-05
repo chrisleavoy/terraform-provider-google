@@ -15,6 +15,16 @@ fun BuildSteps.configureGoEnv() {
     })
 }
 
+fun BuildSteps.helloWorld() {
+    step(ScriptBuildStep {
+        name = "Hello World"
+        scriptContent = """
+            #!/bin/bash
+            echo "Hello World"
+        """.trimIndent()
+    })
+}
+
 fun BuildSteps.setGitCommitBuildId() {
     step(ScriptBuildStep {
         name = "Set build id as shortened git commit hash"

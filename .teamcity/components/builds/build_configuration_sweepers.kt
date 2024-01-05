@@ -43,11 +43,14 @@ class SweeperDetails() {
             }
 
             steps {
-                setGitCommitBuildId()
-                tagBuildToIndicatePurpose()
-                configureGoEnv()
-                downloadTerraformBinary()
-                runSweepers(sweeperName)
+                // Commenting out these steps during refactoring the TeamCity config means we don't interact with the
+                // GCP test projects while testing the new config
+//                setGitCommitBuildId()
+//                tagBuildToIndicatePurpose()
+//                configureGoEnv()
+//                downloadTerraformBinary()
+//                runSweepers(sweeperName)
+                helloWorld()
             }
 
             features {

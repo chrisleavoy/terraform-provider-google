@@ -44,11 +44,14 @@ class PackageDetails(private val packageName: String, private val displayName: S
             }
 
             steps {
-                setGitCommitBuildId()
-                tagBuildToIndicatePurpose()
-                configureGoEnv()
-                downloadTerraformBinary()
-                runAcceptanceTests()
+                // Commenting out these steps during refactoring the TeamCity config means we don't interact with the
+                // GCP test projects while testing the new config
+//                setGitCommitBuildId()
+//                tagBuildToIndicatePurpose()
+//                configureGoEnv()
+//                downloadTerraformBinary()
+//                runAcceptanceTests()
+                helloWorld()
             }
 
             features {

@@ -7,7 +7,7 @@ import jetbrains.buildServer.configs.kotlin.SharedResource
 import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
-fun BuildConfigurationsForPackages(packages: Map<String, Map<String, String>>, providerName: String, parentProjectName: String, vcsRoot: GitVcsRoot, lock: SharedResource, environmentVariables: AccTestConfiguration): List<BuildType> {
+fun BuildConfigurationsForPackages(packages: Map<String, Map<String, String>>, providerName: String, parentProjectName: String, vcsRoot: GitVcsRoot, lock: String, environmentVariables: AccTestConfiguration): List<BuildType> {
     val list = ArrayList<BuildType>()
 
     // Create build configurations for all packages, except sweeper
@@ -27,7 +27,7 @@ class PackageDetails(private val packageName: String, private val displayName: S
 
     // buildConfiguration returns a BuildType for a service package
     // For BuildType docs, see https://teamcity.jetbrains.com/app/dsl-documentation/root/build-type/index.html
-    fun buildConfiguration(path: String, vcsRoot: GitVcsRoot, lock: SharedResource, parallelism: Int, environmentVariables: AccTestConfiguration, buildTimeout: Int = DefaultBuildTimeoutDuration): BuildType {
+    fun buildConfiguration(path: String, vcsRoot: GitVcsRoot, lock: String, parallelism: Int, environmentVariables: AccTestConfiguration, buildTimeout: Int = DefaultBuildTimeoutDuration): BuildType {
 
         val testPrefix = "TestAcc"
         val testTimeout = "12"

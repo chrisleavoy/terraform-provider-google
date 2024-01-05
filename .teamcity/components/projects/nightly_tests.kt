@@ -9,7 +9,6 @@ import generated.ServicesList
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.sequential
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
-import shared_resources.FoobarSharedResource
 
 
 const val NightlyTestsProjectId = "NightlyTests"
@@ -18,7 +17,7 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
     // Create build configs for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, FoobarSharedResource, config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, "FOOBAR_SHARED_RESOURCE", config)
 
 //    val postSweeperConfig = SweeperBuildConfiguration() // TODO
 

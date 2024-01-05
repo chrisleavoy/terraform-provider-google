@@ -9,8 +9,6 @@ import generated.ServicesList
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
-import shared_resources.FoobarSharedResource
-
 
 const val MMUpstreamProjectId = "MMUpstreamTests"
 
@@ -18,7 +16,7 @@ fun mmUpstream(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
     // Create build configs for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, FoobarSharedResource, config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, "FOOBAR_SHARED_RESOURCE", config)
 
     return Project {
         id(MMUpstreamProjectId)

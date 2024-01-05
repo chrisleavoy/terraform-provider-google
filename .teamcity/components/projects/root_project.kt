@@ -4,7 +4,6 @@ import builds.AccTestConfiguration
 import builds.readOnlySettings
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.sharedResource
-import shared_resources.FoobarSharedResource
 
 // googleRootProject returns a root project that contains multiple subprojects for different use cases including:
 // - Nightly tests
@@ -21,8 +20,11 @@ fun googleRootProject(config: AccTestConfiguration): Project {
 
         features {
            sharedResource {
-                FoobarSharedResource
-            }
+                   id = "FOOBAR_SHARED_RESOURCE"
+                   name = "Foobar"
+                   enabled = true
+                   resourceType = customValues("foobar")
+           }
         }
 
         // Nightly Test project that uses hashicorp/terraform-provider-google(-beta)

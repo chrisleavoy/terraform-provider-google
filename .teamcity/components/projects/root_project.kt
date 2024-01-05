@@ -3,6 +3,7 @@ package projects
 import builds.AccTestConfiguration
 import builds.readOnlySettings
 import jetbrains.buildServer.configs.kotlin.Project
+import jetbrains.buildServer.configs.kotlin.sharedResource
 import shared_resources.FoobarSharedResource
 
 // googleRootProject returns a root project that contains multiple subprojects for different use cases including:
@@ -19,7 +20,9 @@ fun googleRootProject(config: AccTestConfiguration): Project {
         vcsRoot(vcs_roots.ModularMagicianVCSRoot)
 
         features {
-            FoobarSharedResource
+           sharedResource {
+                FoobarSharedResource
+            }
         }
 
         // Nightly Test project that uses hashicorp/terraform-provider-google(-beta)

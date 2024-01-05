@@ -13,6 +13,10 @@ fun googleRootProject(config: AccTestConfiguration): Project {
 
         description = "foobar"
 
+        // Registry the VCS roots used by child projects on the root proejct
+        vcsRoot(vcs_roots.HashiCorpVCSRoot)
+        vcsRoot(vcs_roots.ModularMagicianVCSRoot)
+
         // Nightly Test project that uses hashicorp/terraform-provider-google(-beta)
         subProject(nightlyTests(vcs_roots.HashiCorpVCSRoot, config))
 

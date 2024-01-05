@@ -11,7 +11,6 @@ fun BuildConfigurationsForPackages(packages: Map<String, Map<String, String>>, p
     // Create build configurations for all packages, except sweeper
     packages.forEach { (packageName, info) ->
         val path: String = info.getValue("path").toString()
-        val name: String = info.getValue("name").toString()
         val displayName: String = info.getValue("displayName").toString()
 
         val pkg = PackageDetails(packageName, displayName, providerName, parentProjectName)

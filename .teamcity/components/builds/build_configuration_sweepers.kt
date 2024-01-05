@@ -33,7 +33,7 @@ class SweeperDetails() {
 
         return BuildType {
 
-            id(createID(sweeperName))
+            id(uniqueID(sweeperName))
 
             name = sweeperName
 
@@ -76,7 +76,7 @@ class SweeperDetails() {
         }
     }
 
-    private fun createID(name: String): String {
+    private fun uniqueID(name: String): String {
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
         return name.replace("-", "_").uppercase()

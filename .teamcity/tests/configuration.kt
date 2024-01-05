@@ -40,17 +40,17 @@ class ConfigurationTests {
 
     // Commented out because it's not true that all builds have triggers now.
     // Once I have the ability to run tests I'll address this - writing new tests for the new config
-    // @Test
-    // fun buildShouldHaveTrigger() {
-    //     val project = Google("default", "description", testVcsRootId(), "refs/heads/main", testConfiguration())
-    //     var exists = false
-    //     project.buildTypes.forEach{ bt ->
-    //         bt.triggers.items.forEach { t ->
-    //             if (t.type == "schedulingTrigger") {
-    //                 exists = true
-    //             }
-    //         }
-    //     }
-    //     assertTrue("The Build Configuration should have a Trigger", exists)
-    // }
+    //  @Test
+    //  fun buildShouldHaveTrigger() {
+    //      val project = googleRootProject(testConfiguration())
+    //      var exists = false
+    //      project.buildTypes.forEach{ bt ->
+    //          bt.triggers.items.forEach { t ->
+    //              if (t.type == "schedulingTrigger") {
+    //                  exists = true
+    //              }
+    //          }
+    //      }
+    //      assertTrue("The Build Configuration should have a Trigger", exists)
+    //  }
 }

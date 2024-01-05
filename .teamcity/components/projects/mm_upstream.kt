@@ -16,7 +16,7 @@ fun mmUpstream(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
     // Create build configs for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, "FOOBAR_SHARED_RESOURCE", config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, "Foobar", config)
 
     return Project {
         id(MMUpstreamProjectId)

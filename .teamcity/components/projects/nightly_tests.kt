@@ -1,6 +1,8 @@
 package projects
 
+import ProjectSweeperName
 import ProviderName
+import ServiceSweeperName
 import SharedResourceNameBeta
 import SharedResourceNameGa
 import SharedResourceNamePr
@@ -25,9 +27,9 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
     val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, sharedResources, config)
 
     // Create build config for sweeping the nightly test project - everything except projects
-    val serviceSweeperConfig = BuildConfigurationForSweeper("Service Sweeper", SweepersList, NightlyTestsProjectId, vcsRoot, sharedResources, config)
+    val serviceSweeperConfig = BuildConfigurationForSweeper(ServiceSweeperName, SweepersList, NightlyTestsProjectId, vcsRoot, sharedResources, config)
     // TODO this needs to be conditionally templated in based on GA/Beta
-    val projectSweeperConfig = BuildConfigurationForSweeper("Project Sweeper", SweepersList, NightlyTestsProjectId, vcsRoot, allSharedResources, config)
+    val projectSweeperConfig = BuildConfigurationForSweeper(ProjectSweeperName, SweepersList, NightlyTestsProjectId, vcsRoot, allSharedResources, config)
 
     // Add CRON trigger to all build configurations
     val trigger  = NightlyTriggerConfiguration()

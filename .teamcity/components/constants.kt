@@ -30,3 +30,7 @@ const val DefaultBuildTimeoutDuration = 60 * 12 // 12 hours in minutes
 const val SharedResourceNameGa = "ci-test-project-nightly-ga Service Lock"
 const val SharedResourceNameBeta = "ci-test-project-nightly-beta Service Lock"
 const val SharedResourceNamePr = "ci-test-project-188019 Service Lock"
+
+// Build configuration names referenced in multiple places
+const val ServiceSweeperName = "Service Sweeper"
+const val ProjectSweeperName = "Project Sweeper"

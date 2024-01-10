@@ -19,7 +19,11 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
     val allPackages = PackagesList + ServicesList
     val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, "Foobar", config)
 
-//    val postSweeperConfig = SweeperBuildConfiguration() // TODO
+    // Add CRON trigger to all build configurations
+    val trigger  = NightlyTriggerConfiguration()
+    packageBuildConfigs.forEach { buildConfiguration ->
+        buildConfiguration.addTrigger(trigger)
+    }
 
     return Project {
         id(NightlyTestsProjectId)

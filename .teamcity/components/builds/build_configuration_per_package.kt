@@ -92,10 +92,11 @@ class PackageDetails(private val packageName: String, private val displayName: S
     private fun uniqueID(): String {
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
-        val parent = this.parentProjectName.replace("-", "").uppercase()
-        val pv = this.providerName.replace("-", "").uppercase()
-        val pkg = this.packageName.replace("-", "").uppercase()
+        var id = "%s_%s_PACKAGE_%s".format(this.parentProjectName, this.providerName, this.packageName)
+        id.replace("-", "")
+        id.replace(" ", "_")
+        id.uppercase()
 
-        return "%s_%s_PACKAGE_%s".format(parent, pv, pkg)
+        return id
     }
 }

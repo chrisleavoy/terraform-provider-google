@@ -91,9 +91,11 @@ class SweeperDetails(private val sweeperName: String, private val parentProjectN
     private fun uniqueID(): String {
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
-        val parent = this.parentProjectName.replace("-", "").uppercase()
-        val name = this.sweeperName.replace("-", "_").uppercase()
+        var id = "%s_%s".format(this.parentProjectName, this.sweeperName)
+        id.replace("-", "")
+        id.replace(" ", "_")
+        id.uppercase()
 
-        return "%s_%s".format(parent, name)
+        return id
     }
 }

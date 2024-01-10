@@ -7,18 +7,17 @@ import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 
-fun BuildConfigurationForSweeper(sweeperName: String, packages: Map<String, Map<String, String>>, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): BuildType {
+fun BuildConfigurationForSweeper(sweeperName: String, packages: Map<String, Map<String, String>>, parentProjectName: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): BuildType {
     val sweeperPackage: Map<String, String> = packages.getValue("sweeper")
     val sweeperPath: String = sweeperPackage.getValue("path").toString()
-    val s = SweeperDetails()
+    val s = SweeperDetails(sweeperName, parentProjectName)
 
-    return s.sweeperBuildConfig(sweeperName, sweeperPath, vcsRoot, sharedResources, DefaultParallelism, environmentVariables)
+    return s.sweeperBuildConfig(sweeperPath, vcsRoot, sharedResources, DefaultParallelism, environmentVariables)
 }
 
-class SweeperDetails() {
+class SweeperDetails(private val sweeperName: String, private val parentProjectName: String) {
 
     fun sweeperBuildConfig(
-        sweeperName: String,
         path: String,
         vcsRoot: GitVcsRoot,
         sharedResources: List<String>,
@@ -35,7 +34,7 @@ class SweeperDetails() {
 
         return BuildType {
 
-            id(uniqueID(sweeperName))
+            id(uniqueID())
 
             name = sweeperName
 
@@ -89,9 +88,12 @@ class SweeperDetails() {
         }
     }
 
-    private fun uniqueID(name: String): String {
+    private fun uniqueID(): String {
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
-        return name.replace("-", "_").uppercase()
+        val parent = this.parentProjectName.replace("-", "").uppercase()
+        val name = this.sweeperName.replace("-", "_").uppercase()
+
+        return "%s_%s".format(parent, name)
     }
 }

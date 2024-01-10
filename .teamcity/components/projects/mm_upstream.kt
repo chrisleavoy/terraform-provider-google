@@ -24,7 +24,7 @@ fun mmUpstream(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
     val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, sharedResources, config)
 
     // Create build config for sweeping the nightly test project - everything except projects
-    val serviceSweeperConfig = BuildConfigurationForSweeper("Service Sweeper", SweepersList, vcsRoot, sharedResources, config)
+    val serviceSweeperConfig = BuildConfigurationForSweeper("Service Sweeper", SweepersList, MMUpstreamProjectId, vcsRoot, sharedResources, config)
 
     return Project {
         id(MMUpstreamProjectId)

@@ -4,6 +4,7 @@ import SharedResourceNameGa
 import SharedResourceNamePr
 import builds.AccTestConfiguration
 import builds.readOnlySettings
+import generated.GetServiceNameList
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.sharedResource
 
@@ -26,7 +27,7 @@ fun googleRootProject(config: AccTestConfiguration): Project {
                 id = "GA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNameGa
                 enabled = true
-                resourceType = customValues("foobar")
+                resourceType = customValues(GetServiceNameList())
             }
             // TODO - control which of GA or Beta put here via MM
 //            // For controlling sweeping of the Beta nightly test project
@@ -41,7 +42,7 @@ fun googleRootProject(config: AccTestConfiguration): Project {
                 id = "PR_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNamePr
                 enabled = true
-                resourceType = customValues("foobar")
+                resourceType = customValues(GetServiceNameList())
             }
         }
 

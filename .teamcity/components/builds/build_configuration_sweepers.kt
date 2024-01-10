@@ -7,12 +7,12 @@ import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 
-fun buildConfigurationForSweeper(sweeperName: String, packages: Map<String, Map<String, String>>, vcsRoot: GitVcsRoot, environmentVariables: AccTestConfiguration): BuildType {
+fun BuildConfigurationForSweeper(sweeperName: String, packages: Map<String, Map<String, String>>, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): BuildType {
     val sweeperPackage: Map<String, String> = packages.getValue("sweeper")
     val sweeperPath: String = sweeperPackage.getValue("path").toString()
     val s = SweeperDetails()
 
-    return s.sweeperBuildConfig(sweeperName, sweeperPath, vcsRoot, DefaultParallelism, environmentVariables)
+    return s.sweeperBuildConfig(sweeperName, sweeperPath, vcsRoot, sharedResources, DefaultParallelism, environmentVariables)
 }
 
 class SweeperDetails() {
@@ -21,6 +21,7 @@ class SweeperDetails() {
         sweeperName: String,
         path: String,
         vcsRoot: GitVcsRoot,
+        sharedResources: List<String>,
         parallelism: Int,
         environmentVariables: AccTestConfiguration,
         buildTimeout: Int = DefaultBuildTimeoutDuration
@@ -56,6 +57,14 @@ class SweeperDetails() {
 
             features {
                 golang()
+                if (sharedResources.isNotEmpty()) {
+                    sharedResources {
+                        // When the build runs, it locks the value(s) below
+                        sharedResources.forEach { lock ->
+                            lockAllPackageValues(lock)
+                        }
+                    }
+                }
             }
 
             params {

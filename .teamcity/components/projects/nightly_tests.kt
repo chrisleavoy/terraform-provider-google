@@ -7,8 +7,8 @@ import SharedResourceNamePr
 import builds.*
 import generated.PackagesList
 import generated.ServicesList
+import generated.SweepersList
 import jetbrains.buildServer.configs.kotlin.Project
-import jetbrains.buildServer.configs.kotlin.sequential
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 
@@ -24,11 +24,15 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
     val allPackages = PackagesList + ServicesList
     val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, sharedResources, config)
 
+    // Create build config for sweeping the nightly test project - everything except projects
+    val serviceSweeperConfig = BuildConfigurationForSweeper("Service Sweeper", SweepersList, vcsRoot, sharedResources, config)
+
     // Add CRON trigger to all build configurations
     val trigger  = NightlyTriggerConfiguration()
     packageBuildConfigs.forEach { buildConfiguration ->
         buildConfiguration.addTrigger(trigger)
     }
+    serviceSweeperConfig.addTrigger(trigger)
 
     return Project {
         id(NightlyTestsProjectId)
@@ -39,18 +43,7 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
         packageBuildConfigs.forEach { buildConfiguration ->
             buildType(buildConfiguration)
         }
-        // buildType(postSweeperConfig) // TODO
-
-        // Create a build chain so all acceptance test builds must finish before the post-sweeper runs.
-        sequential {
-            parallel{
-                packageBuildConfigs.forEach { buildConfiguration ->
-                    buildType(buildConfiguration)
-                }
-            }
-
-            // buildType(postSweeperConfig) // TODO
-        }
+        buildType(serviceSweeperConfig)
 
         params{
             configureGoogleSpecificTestParameters(config)

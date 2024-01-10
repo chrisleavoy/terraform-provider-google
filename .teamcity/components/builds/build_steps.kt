@@ -15,13 +15,13 @@ fun BuildSteps.configureGoEnv() {
     })
 }
 
-fun BuildSteps.helloWorld() {
+fun BuildSteps.helloWorld(sharedResourceName: String) {
     step(ScriptBuildStep {
         name = "Hello World"
         scriptContent = """
             #!/bin/bash
             echo "Hello World"
-            echo "Shared resource : %teamcity.locks.readLock.Foobar%"
+            echo "Shared resource : %teamcity.locks.readLock.${sharedResourceName}%"
         """.trimIndent()
     })
 }

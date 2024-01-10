@@ -51,7 +51,7 @@ class SweeperDetails(private val sweeperName: String, private val parentProjectN
 //                configureGoEnv()
 //                downloadTerraformBinary()
 //                runSweepers(sweeperName)
-                helloWorld()
+                helloWorld(sharedResources[0])
             }
 
             features {

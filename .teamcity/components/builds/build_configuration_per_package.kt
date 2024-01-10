@@ -53,7 +53,7 @@ class PackageDetails(private val packageName: String, private val displayName: S
 //                configureGoEnv()
 //                downloadTerraformBinary()
 //                runAcceptanceTests()
-                helloWorld()
+                helloWorld(sharedResources[0])
             }
 
             features {

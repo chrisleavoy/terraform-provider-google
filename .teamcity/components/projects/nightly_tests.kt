@@ -1,9 +1,10 @@
 package projects
 
 import ProviderName
-import builds.AccTestConfiguration
-import builds.BuildConfigurationsForPackages
-import builds.configureGoogleSpecificTestParameters
+import SharedResourceNameBeta
+import SharedResourceNameGa
+import SharedResourceNamePr
+import builds.*
 import generated.PackagesList
 import generated.ServicesList
 import jetbrains.buildServer.configs.kotlin.Project
@@ -15,9 +16,13 @@ const val NightlyTestsProjectId = "NightlyTests"
 
 fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
-    // Create build configs for each package defined in packages.kt and services.kt files
+    // TODO Do this in MM templating
+    var sharedResources: List<String> = listOf(SharedResourceNameGa)
+    var allSharedResources: List<String> = listOf(SharedResourceNameGa, SharedResourceNameBeta, SharedResourceNamePr)
+
+    // Create build configs to run acceptance tests for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, "Foobar", config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, NightlyTestsProjectId, vcsRoot, sharedResources, config)
 
     // Add CRON trigger to all build configurations
     val trigger  = NightlyTriggerConfiguration()

@@ -1,6 +1,7 @@
 package projects
 
 import ProviderName
+import SharedResourceNamePr
 import builds.AccTestConfiguration
 import builds.BuildConfigurationsForPackages
 import builds.configureGoogleSpecificTestParameters
@@ -14,9 +15,11 @@ const val MMUpstreamProjectId = "MMUpstreamTests"
 
 fun mmUpstream(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
+    var sharedResources: List<String> = listOf(SharedResourceNamePr)
+
     // Create build configs for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, "Foobar", config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, ProviderName, MMUpstreamProjectId, vcsRoot, sharedResources, config)
 
     return Project {
         id(MMUpstreamProjectId)

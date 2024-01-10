@@ -25,3 +25,8 @@ const val DefaultDaysOfMonth = "*"
 
 // Value used to make long-running builds fail due to a timeout
 const val DefaultBuildTimeoutDuration = 60 * 12 // 12 hours in minutes
+
+// Values used to define and reference Shared Resource locks, used to avoid conflicting builds
+const val SharedResourceNameGa = "ci-test-project-nightly-ga Service Lock"
+const val SharedResourceNameBeta = "ci-test-project-nightly-beta Service Lock"
+const val SharedResourceNamePr = "ci-test-project-188019 Service Lock"

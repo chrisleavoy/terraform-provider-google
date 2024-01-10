@@ -654,3 +654,12 @@ var ServicesList = mapOf(
         "path" to "./google/services/workstations"
     )
 )
+
+fun GetServiceNameList(): List<String> {
+    var serviceNameList: ArrayList<String> = arrayListOf()
+    ServicesList.forEach{ service ->
+        var serviceName = service.value.getValue("name").toString()
+        serviceNameList.add(serviceName)
+    }
+    return serviceNameList
+}

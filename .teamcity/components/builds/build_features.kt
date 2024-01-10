@@ -1,5 +1,6 @@
 package builds
 
+import generated.GetServiceNameList
 import generated.ServicesList
 import jetbrains.buildServer.configs.kotlin.BuildFeatures
 import jetbrains.buildServer.configs.kotlin.SharedResources
@@ -22,8 +23,7 @@ fun BuildFeatures.golang() {
 
 // lockAllPackageValues takes a Shared Resource name as an argument and then registers locks on all service values inside that lock
 fun SharedResources.lockAllPackageValues(sharedResource: String) {
-    ServicesList.forEach{ service ->
-        var serviceName = service.value.getValue("name").toString()
-        lockSpecificValue(sharedResource,  serviceName)
+    GetServiceNameList().forEach { serviceName ->
+        lockSpecificValue(sharedResource, serviceName)
     }
 }

@@ -26,6 +26,8 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
 
     // Create build config for sweeping the nightly test project - everything except projects
     val serviceSweeperConfig = BuildConfigurationForSweeper("Service Sweeper", SweepersList, vcsRoot, sharedResources, config)
+    // TODO this needs to be conditionally templated in based on GA/Beta
+    val projectSweeperConfig = BuildConfigurationForSweeper("Project Sweeper", SweepersList, vcsRoot, allSharedResources, config)
 
     // Add CRON trigger to all build configurations
     val trigger  = NightlyTriggerConfiguration()
@@ -33,6 +35,7 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
         buildConfiguration.addTrigger(trigger)
     }
     serviceSweeperConfig.addTrigger(trigger)
+    projectSweeperConfig.addTrigger(trigger)
 
     return Project {
         id(NightlyTestsProjectId)
@@ -44,6 +47,7 @@ fun nightlyTests(vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
             buildType(buildConfiguration)
         }
         buildType(serviceSweeperConfig)
+        buildType(projectSweeperConfig)
 
         params{
             configureGoogleSpecificTestParameters(config)

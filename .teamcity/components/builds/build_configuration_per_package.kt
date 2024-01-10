@@ -93,9 +93,9 @@ class PackageDetails(private val packageName: String, private val displayName: S
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
         var id = "%s_%s_PACKAGE_%s".format(this.parentProjectName, this.providerName, this.packageName)
-        id.replace("-", "")
-        id.replace(" ", "_")
-        id.uppercase()
+        id = id.replace("-", "")
+        id = id.replace(" ", "_")
+        id = id.uppercase()
 
         return id
     }

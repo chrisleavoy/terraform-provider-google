@@ -10,7 +10,7 @@ const val ProviderNameGa = "google"
 const val ProviderNameBeta = "google-beta"
 
 // specifies the default hour (UTC) at which tests should be triggered, if enabled
-const val DefaultStartHour = 4
+const val DefaultStartHour = 17
 
 // specifies the default level of parallelism per-service-package
 const val DefaultParallelism = 6

@@ -5,6 +5,7 @@ import SharedResourceNameGa
 import SharedResourceNamePr
 import builds.AccTestConfiguration
 import builds.readOnlySettings
+import generated.GetPackageNameList
 import generated.GetServiceNameList
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.sharedResource
@@ -30,21 +31,21 @@ fun googleCloudRootProject(config: AccTestConfiguration): Project {
                 id = "GA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNameGa
                 enabled = true
-                resourceType = customValues(GetServiceNameList())
+                resourceType = customValues(GetServiceNameList() + GetPackageNameList())
             }
             // For controlling sweeping of the Beta nightly test project
             sharedResource {
                 id = "BETA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNameBeta
                 enabled = true
-                resourceType = customValues(GetServiceNameList())
+                resourceType = customValues(GetServiceNameList() + GetPackageNameList())
             }
             // For controlling sweeping of the PR testing project
             sharedResource {
                 id = "PR_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNamePr
                 enabled = true
-                resourceType = customValues(GetServiceNameList())
+                resourceType = customValues(GetServiceNameList() + GetPackageNameList())
             }
         }
 

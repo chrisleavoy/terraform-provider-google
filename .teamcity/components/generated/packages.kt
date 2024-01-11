@@ -51,3 +51,12 @@ var SweepersList = mapOf(
         "path" to "./google/sweeper"
     )
 )
+
+fun GetPackageNameList(): List<String> {
+    var packageNameList: ArrayList<String> = arrayListOf()
+    PackagesList.forEach{ p ->
+        var packageName = p.value.getValue("name").toString()
+        packageNameList.add(packageName)
+    }
+    return packageNameList
+}

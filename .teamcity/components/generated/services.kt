@@ -657,8 +657,8 @@ var ServicesList = mapOf(
 
 fun GetServiceNameList(): List<String> {
     var serviceNameList: ArrayList<String> = arrayListOf()
-    ServicesList.forEach{ service ->
-        var serviceName = service.value.getValue("name").toString()
+    ServicesList.forEach{ s ->
+        var serviceName = s.value.getValue("name").toString()
         serviceNameList.add(serviceName)
     }
     return serviceNameList

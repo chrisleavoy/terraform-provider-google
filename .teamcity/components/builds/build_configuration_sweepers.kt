@@ -60,8 +60,8 @@ class SweeperDetails(private val sweeperName: String, private val parentProjectN
                 if (sharedResources.isNotEmpty()) {
                     sharedResources {
                         // When the build runs, it locks the value(s) below
-                        sharedResources.forEach { lock ->
-                            lockAllPackageValues(lock)
+                        sharedResources.forEach { sr ->
+                            lockAllValues(sr)
                         }
                     }
                 }

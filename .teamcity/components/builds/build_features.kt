@@ -20,10 +20,3 @@ fun BuildFeatures.golang() {
         })
     }
 }
-
-// lockAllPackageValues takes a Shared Resource name as an argument and then registers locks on all service values inside that lock
-fun SharedResources.lockAllPackageValues(sharedResource: String) {
-    GetServiceNameList().forEach { serviceName ->
-        lockSpecificValue(sharedResource, serviceName)
-    }
-}

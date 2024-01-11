@@ -16,10 +16,11 @@ fun projectSweeperSubProject(config: AccTestConfiguration): Project {
 
     val projectId = replaceCharsId("PROJECT_SWEEPER")
 
-    // Get a list of ALL shared resources, to help the project sweeper avoid clashing with any other running build
+    // List of ALL shared resources; avoid clashing with any other running build
     val sharedResources: List<String> = listOf(SharedResourceNameGa, SharedResourceNameBeta, SharedResourceNamePr)
 
     // Create build config for sweeping project resources
+    // Uses the HashiCorpVCSRootGa VCS Root so that the latest sweepers in hashicorp/terraform-provider-google are used
     val serviceSweeperConfig = BuildConfigurationForSweeper("N/A", ProjectSweeperName, SweepersList, projectId, HashiCorpVCSRootGa, sharedResources, config)
     serviceSweeperConfig.enableProjectSweep()
     val trigger  = NightlyTriggerConfiguration()

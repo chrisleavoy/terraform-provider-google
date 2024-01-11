@@ -60,8 +60,8 @@ class PackageDetails(private val packageName: String, private val displayName: S
                 if (sharedResources.isNotEmpty()) {
                     sharedResources {
                         // When the build runs, it locks the value(s) below
-                        sharedResources.forEach { lock ->
-                            lockSpecificValue(lock, packageName)
+                        sharedResources.forEach { sr ->
+                            lockSpecificValue(sr, packageName)
                         }
                     }
                 }

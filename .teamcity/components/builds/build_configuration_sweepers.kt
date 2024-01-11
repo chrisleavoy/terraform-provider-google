@@ -5,6 +5,7 @@ import DefaultParallelism
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
+import replaceCharsId
 
 
 fun BuildConfigurationForSweeper(providerName: String, sweeperName: String, packages: Map<String, Map<String, String>>, parentProjectName: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): BuildType {
@@ -92,10 +93,6 @@ class SweeperDetails(private val sweeperName: String, private val parentProjectN
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
         var id = "%s_%s".format(this.parentProjectName, this.sweeperName)
-        id = id.replace("-", "")
-        id = id.replace(" ", "_")
-        id = id.uppercase()
-
-        return id
+        return replaceCharsId(id)
     }
 }

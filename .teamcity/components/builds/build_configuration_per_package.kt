@@ -6,6 +6,7 @@ import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.SharedResource
 import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
+import replaceCharsId
 
 fun BuildConfigurationsForPackages(packages: Map<String, Map<String, String>>, providerName: String, parentProjectName: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): List<BuildType> {
     val list = ArrayList<BuildType>()
@@ -31,8 +32,6 @@ class PackageDetails(private val packageName: String, private val displayName: S
 
         val testPrefix = "TestAcc"
         val testTimeout = "12"
-        val sweeperRegions = "" // Not used
-        val sweeperRun = "" // Not used
 
         return BuildType {
             // TC needs a consistent ID for dynamically generated packages
@@ -92,10 +91,6 @@ class PackageDetails(private val packageName: String, private val displayName: S
         // Replacing chars can be necessary, due to limitations on IDs
         // "ID should start with a latin letter and contain only latin letters, digits and underscores (at most 225 characters)."
         var id = "%s_%s_PACKAGE_%s".format(this.parentProjectName, this.providerName, this.packageName)
-        id = id.replace("-", "")
-        id = id.replace(" ", "_")
-        id = id.uppercase()
-
-        return id
+        return replaceCharsId(id)
     }
 }

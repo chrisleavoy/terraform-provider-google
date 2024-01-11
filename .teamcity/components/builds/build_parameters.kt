@@ -1,7 +1,6 @@
 package builds
 
 import DefaultTerraformCoreVersion
-import ProviderName
 import jetbrains.buildServer.configs.kotlin.ParameterDisplay
 import jetbrains.buildServer.configs.kotlin.ParametrizedWithType
 
@@ -73,14 +72,14 @@ fun ParametrizedWithType.terraformSkipProjectSweeper() {
 
 // ParametrizedWithType.terraformLoggingParameters sets environment variables and build parameters that
 // affect which logs are shown and allows them to be saved
-fun ParametrizedWithType.terraformLoggingParameters() {
+fun ParametrizedWithType.terraformLoggingParameters(providerName: String) {
     // Set logging levels to match old projects
     text("env.TF_LOG", "DEBUG")
     text("env.TF_LOG_CORE", "WARN")
     text("env.TF_LOG_SDK_FRAMEWORK", "INFO")
 
     // Set where logs are sent
-    text("PROVIDER_NAME", ProviderName)
+    text("PROVIDER_NAME", providerName)
     text("env.TF_LOG_PATH_MASK", "%system.teamcity.build.checkoutDir%/debug-%PROVIDER_NAME%-%env.BUILD_NUMBER%-%s.txt") // .txt extension used to make artifacts open in browser, instead of download
 }
 

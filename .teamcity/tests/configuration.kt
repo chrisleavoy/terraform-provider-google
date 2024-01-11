@@ -10,13 +10,12 @@ package tests
 import builds.UseTeamCityGoTest
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import projects.NightlyTestsProjectId
-import projects.googleRootProject
+import projects.googleCloudRootProject
 
 class ConfigurationTests {
     @Test
     fun buildShouldFailOnError() {
-        val project = googleRootProject(testConfiguration())
+        val project = googleCloudRootProject(testConfiguration())
         project.buildTypes.forEach { bt ->
             assertTrue("Build '${bt.id}' should fail on errors!", bt.failureConditions.errorMessage)
         }
@@ -24,7 +23,7 @@ class ConfigurationTests {
 
     @Test
     fun buildShouldHaveGoTestFeature() {
-        val project = googleRootProject(testConfiguration())
+        val project = googleCloudRootProject(testConfiguration())
         project.buildTypes.forEach{ bt ->
             var exists = false
             bt.features.items.forEach { f ->

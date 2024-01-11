@@ -71,7 +71,7 @@ class PackageDetails(private val packageName: String, private val displayName: S
             params {
                 configureGoogleSpecificTestParameters(environmentVariables)
                 terraformAcceptanceTestParameters(parallelism, testPrefix, testTimeout)
-                terraformLoggingParameters()
+                terraformLoggingParameters(providerName)
                 terraformCoreBinaryTesting()
                 terraformShouldPanicForSchemaErrors()
                 readOnlySettings()

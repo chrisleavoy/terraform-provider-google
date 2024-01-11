@@ -5,7 +5,7 @@
 
 // this file is auto-generated with mmv1, any changes made here will be overwritten
 
-import projects.googleRootProject
+import projects.googleCloudRootProject
 import builds.AccTestConfiguration
 import jetbrains.buildServer.configs.kotlin.*
 
@@ -35,6 +35,13 @@ var serviceAccount = DslContext.getParameter("serviceAccount", "")
 var zone = DslContext.getParameter("zone", "")
 
 // Create AccTestConfiguration object that contains the above values to be set as environment variables on builds
+// Separate configs are made for:
+// - Use of the GA nightly tests project
+// - Use of the GA PR tests project
+// - Use of the Beta nightly tests project
+// - Use of the Beta PR tests project
+
+// TODO - refactor how we handle context parameters and convert to config for the 4 cases above
 var configuration = AccTestConfiguration(
     billingAccount,
     billingAccount2,
@@ -55,4 +62,4 @@ var configuration = AccTestConfiguration(
 
 // This is the entry point of the code in .teamcity/
 // See https://teamcity.jetbrains.com/app/dsl-documentation/root/project.html
-project(googleRootProject(configuration))
+project(googleCloudRootProject(configuration))

@@ -1,18 +1,33 @@
 package vcs_roots
 
-import ProviderName
+import ProviderNameBeta
+import ProviderNameGa
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
-object HashiCorpVCSRoot: GitVcsRoot({
-    name = "https://github.com/hashicorp/terraform-provider-${ProviderName}#refs/heads/main"
-    url = "https://github.com/hashicorp/terraform-provider-${ProviderName}"
+object HashiCorpVCSRootGa: GitVcsRoot({
+    name = "https://github.com/hashicorp/terraform-provider-${ProviderNameGa}#refs/heads/main"
+    url = "https://github.com/hashicorp/terraform-provider-${ProviderNameGa}"
     branch = "refs/heads/main"
     branchSpec = "+:*"
 })
 
-object ModularMagicianVCSRoot: GitVcsRoot({
-    name = "https://github.com/modular-magician/terraform-provider-${ProviderName}#refs/heads/main"
-    url = "https://github.com/modular-magician/terraform-provider-${ProviderName}"
+object HashiCorpVCSRootBeta: GitVcsRoot({
+    name = "https://github.com/hashicorp/terraform-provider-${ProviderNameBeta}#refs/heads/main"
+    url = "https://github.com/hashicorp/terraform-provider-${ProviderNameBeta}"
+    branch = "refs/heads/main"
+    branchSpec = "+:*"
+})
+
+object ModularMagicianVCSRootGa: GitVcsRoot({
+    name = "https://github.com/modular-magician/terraform-provider-${ProviderNameGa}#refs/heads/main"
+    url = "https://github.com/modular-magician/terraform-provider-${ProviderNameGa}"
+    branch = "refs/heads/main"
+    branchSpec = "+:*"
+})
+
+object ModularMagicianVCSRootBeta: GitVcsRoot({
+    name = "https://github.com/modular-magician/terraform-provider-${ProviderNameBeta}#refs/heads/main"
+    url = "https://github.com/modular-magician/terraform-provider-${ProviderNameBeta}"
     branch = "refs/heads/main"
     branchSpec = "+:*"
 })

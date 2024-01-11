@@ -7,15 +7,15 @@ import jetbrains.buildServer.configs.kotlin.sharedResources
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
 
-fun BuildConfigurationForSweeper(sweeperName: String, packages: Map<String, Map<String, String>>, parentProjectName: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): BuildType {
+fun BuildConfigurationForSweeper(providerName: String, sweeperName: String, packages: Map<String, Map<String, String>>, parentProjectName: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration): BuildType {
     val sweeperPackage: Map<String, String> = packages.getValue("sweeper")
     val sweeperPath: String = sweeperPackage.getValue("path").toString()
-    val s = SweeperDetails(sweeperName, parentProjectName)
+    val s = SweeperDetails(sweeperName, parentProjectName, providerName)
 
     return s.sweeperBuildConfig(sweeperPath, vcsRoot, sharedResources, DefaultParallelism, environmentVariables)
 }
 
-class SweeperDetails(private val sweeperName: String, private val parentProjectName: String) {
+class SweeperDetails(private val sweeperName: String, private val parentProjectName: String, private val providerName: String) {
 
     fun sweeperBuildConfig(
         path: String,
@@ -71,7 +71,7 @@ class SweeperDetails(private val sweeperName: String, private val parentProjectN
                 terraformAcceptanceTestParameters(parallelism, testPrefix, testTimeout)
                 terraformSweeperParameters(sweeperRegions, sweeperRun)
                 terraformSkipProjectSweeper()
-                terraformLoggingParameters()
+                terraformLoggingParameters(providerName)
                 terraformCoreBinaryTesting()
                 terraformShouldPanicForSchemaErrors()
                 readOnlySettings()
@@ -85,7 +85,6 @@ class SweeperDetails(private val sweeperName: String, private val parentProjectN
                 executionTimeoutMin = buildTimeout
             }
 
-            // NOTE: dependencies and triggers are added by methods after the BuildType object is created
         }
     }
 

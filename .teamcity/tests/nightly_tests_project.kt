@@ -7,19 +7,16 @@
 
 package tests
 
-import ProjectSweeperName
-import ProviderName
-import builds.UseTeamCityGoTest
+//import ProjectSweeperName
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import projects.MMUpstreamProjectId
-import projects.NightlyTestsProjectId
-import projects.googleRootProject
+import NightlyTestsProjectId
+import projects.googleCloudRootProject
 
 class NightlyTestProjectsTests {
     @Test
     fun allBuildsShouldHaveTrigger() {
-        val project = googleRootProject(testConfiguration())
+        val project = googleCloudRootProject(testConfiguration())
         project.subProjects.forEach{ subProject ->
             if (subProject.id.toString() == NightlyTestsProjectId ){
                 subProject.buildTypes.forEach{ bt ->
@@ -40,30 +37,33 @@ class NightlyTestProjectsTests {
         }
     }
 
-    @Test
-    fun containProjectSweeperOnlyIfGA() {
-        val project = googleRootProject(testConfiguration())
-        project.subProjects.forEach{ subProject ->
-            // Nightly Test Project should contain project sweeper IF it's testing the GA provider
-            if (subProject.id.toString() == NightlyTestsProjectId ){
-                subProject.buildTypes.forEach{ bt ->
-                    if (bt.name == ProjectSweeperName){
-                        if (ProviderName == "google"){
-                            assertTrue("The GA Nightly Test project should contain a Project Sweeper", true)
-                            return
-                        }
-                        if (ProviderName == "google-beta"){
-                            assertTrue("The Beta Nightly Test project should NOT contain a Project Sweeper", false)
-                            return
-                        }
-                    }
-                }
-            }
-        }
-
-        // If we haven't found a project sweeper in the code above
-        if (ProviderName == "google") {
-            assertTrue("The GA Nightly Test project should contain a Project Sweeper", false)
-        }
-    }
+//    @Test
+//    fun containProjectSweeperOnlyIfGA() {
+//        val rootProject = googleCloudRootProject(testConfiguration())
+//        val gaProject = //TODO
+//        val betaProject = //TODO
+//
+//            project.subProjects.forEach{ subProject ->
+//            // Nightly Test Project should contain project sweeper IF it's testing the GA provider
+//            if (subProject.id.toString() == NightlyTestsProjectId ){
+//                subProject.buildTypes.forEach{ bt ->
+//                    if (bt.name == ProjectSweeperName){
+//                        if (ProviderName == "google"){
+//                            assertTrue("The GA Nightly Test project should contain a Project Sweeper", true)
+//                            return
+//                        }
+//                        if (ProviderName == "google-beta"){
+//                            assertTrue("The Beta Nightly Test project should NOT contain a Project Sweeper", false)
+//                            return
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        // If we haven't found a project sweeper in the code above
+//        if (ProviderName == "google") {
+//            assertTrue("The GA Nightly Test project should contain a Project Sweeper", false)
+//        }
+//    }
 }

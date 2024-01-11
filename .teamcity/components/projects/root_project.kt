@@ -1,5 +1,6 @@
 package projects
 
+import SharedResourceNameBeta
 import SharedResourceNameGa
 import SharedResourceNamePr
 import builds.AccTestConfiguration
@@ -8,18 +9,20 @@ import generated.GetServiceNameList
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.sharedResource
 
-// googleRootProject returns a root project that contains multiple subprojects for different use cases including:
-// - Nightly tests
-// - Running tests against the modular-magician fork
-fun googleRootProject(config: AccTestConfiguration): Project {
+// googleCloudRootProject returns a root project that contains a subprojects for the GA and Beta version of the
+// Google provider. There are also resources to help manage the test projects used for acceptance tests.
+fun googleCloudRootProject(config: AccTestConfiguration): Project {
 
     return Project{
 
         description = "A test project created by the refactored config code in https://github.com/hashicorp/terraform-provider-google/tree/teamcity-refactor"
 
-        // Registry the VCS roots used by child projects on the root project
-        vcsRoot(vcs_roots.HashiCorpVCSRoot)
-        vcsRoot(vcs_roots.ModularMagicianVCSRoot)
+        // Registering the VCS roots used by subprojects
+        vcsRoot(vcs_roots.HashiCorpVCSRootGa)
+        vcsRoot(vcs_roots.HashiCorpVCSRootBeta)
+        vcsRoot(vcs_roots.ModularMagicianVCSRootGa)
+        vcsRoot(vcs_roots.ModularMagicianVCSRootBeta)
+
 
         features {
             // For controlling sweeping of the GA nightly test project
@@ -29,14 +32,13 @@ fun googleRootProject(config: AccTestConfiguration): Project {
                 enabled = true
                 resourceType = customValues(GetServiceNameList())
             }
-            // TODO - control which of GA or Beta put here via MM
-//            // For controlling sweeping of the Beta nightly test project
-//            sharedResource {
-//                id = "BETA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
-//                name = SharedResourceNameBeta
-//                enabled = true
-//                resourceType = customValues("foobar")
-//            }
+            // For controlling sweeping of the Beta nightly test project
+            sharedResource {
+                id = "BETA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
+                name = SharedResourceNameBeta
+                enabled = true
+                resourceType = customValues(GetServiceNameList())
+            }
             // For controlling sweeping of the PR testing project
             sharedResource {
                 id = "PR_SERVICE_LOCK_SHARED_RESOURCE"
@@ -46,12 +48,9 @@ fun googleRootProject(config: AccTestConfiguration): Project {
             }
         }
 
-        // Nightly Test project that uses hashicorp/terraform-provider-google(-beta)
-        subProject(nightlyTests(vcs_roots.HashiCorpVCSRoot, config))
-
-        // MM Upstream project that uses modular-magician/terraform-provider-google(-beta)
-        subProject(mmUpstream(vcs_roots.ModularMagicianVCSRoot, config))
-
+        subProjects(googleSubProjectGa(config)) // TODO - GA specific configs - nightly and PR
+        subProjects(googleSubProjectBeta(config)) // TODO - Beta specific configs - nightly and PR
+        
         params {
             readOnlySettings()
         }

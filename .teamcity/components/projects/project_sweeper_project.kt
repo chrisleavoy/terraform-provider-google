@@ -12,16 +12,19 @@ import vcs_roots.HashiCorpVCSRootGa
 
 // projectSweeperSubProject returns a subproject that contains a sweeper for project resources
 // Sweeping projects is an edge case because it doesn't respect boundaries between different testing projects GA/Beta/PR
-fun projectSweeperSubProject(config: AccTestConfiguration): Project {
+fun projectSweeperSubProject(allConfig: AllContextParameters): Project {
 
     val projectId = replaceCharsId("PROJECT_SWEEPER")
+
+    // Get config for using the GA identity (arbitrary choice as sweeper isn't confined by GA/Beta etc)
+    val gaConfig = getGaAcceptanceTestConfig(allConfig)
 
     // List of ALL shared resources; avoid clashing with any other running build
     val sharedResources: List<String> = listOf(SharedResourceNameGa, SharedResourceNameBeta, SharedResourceNamePr)
 
     // Create build config for sweeping project resources
     // Uses the HashiCorpVCSRootGa VCS Root so that the latest sweepers in hashicorp/terraform-provider-google are used
-    val serviceSweeperConfig = BuildConfigurationForSweeper("N/A", ProjectSweeperName, SweepersList, projectId, HashiCorpVCSRootGa, sharedResources, config)
+    val serviceSweeperConfig = BuildConfigurationForSweeper("N/A", ProjectSweeperName, SweepersList, projectId, HashiCorpVCSRootGa, sharedResources, gaConfig)
     serviceSweeperConfig.enableProjectSweep()
     val trigger  = NightlyTriggerConfiguration()
     serviceSweeperConfig.addTrigger(trigger)

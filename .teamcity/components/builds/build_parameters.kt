@@ -11,8 +11,60 @@ import jetbrains.buildServer.configs.kotlin.ParametrizedWithType
 // This allows us to reuse code in the config easily, while ensuring the same parameters are set across builds.
 // See the class's documentation: https://teamcity.jetbrains.com/app/dsl-documentation/root/parametrized-with-type/index.html
 
+// AllContextParameters is used to pass ALL the values set via Context Parameters into the Kotlin code's entrypoint.
+class AllContextParameters(
 
-// AccTestConfiguration is used to easily pass values set via Context Parameters into the Kotlin code's entrypoint.
+    // Values that differ across environments
+
+    // GOOGLE_CREDENTIALS
+    val credentialsGa: String,
+    val credentialsBeta: String,
+    val credentialsVcr: String,
+
+    // GOOGLE_SERVICE_ACCOUNT
+    val serviceAccountGa: String,
+    val serviceAccountBeta: String,
+    val serviceAccountVcr: String,
+
+    // GOOGLE_PROJECT & GOOGLE_PROJECT_NUMBER
+    val projectGa: String,
+    val projectBeta: String,
+    val projectVcr: String,
+    val projectNumberGa: String,
+    val projectNumberBeta: String,
+    val projectNumberVcr: String,
+
+    // GOOGLE_IDENTITY_USER
+    val identityUserGa: String,
+    val identityUserBeta: String,
+    val identityUserVcr: String,
+
+    // GOOGLE_FIRESTORE_PROJECT
+    val firestoreProjectGa: String,
+    val firestoreProjectBeta: String,
+    val firestoreProjectVcr: String,
+
+    // GOOGLE_MASTER_BILLING_ACCOUNT
+    val masterBillingAccountGa: String,
+    val masterBillingAccountBeta: String,
+    val masterBillingAccountVcr: String,
+
+    // GOOGLE_ORG_2
+    val org2Ga: String,
+    val org2Beta: String,
+    val org2Vcr: String,
+
+    // Values that are the same across GA, Beta, and VCR testing environments
+    val billingAccount: String,   // GOOGLE_BILLING_ACCOUNT
+    val billingAccount2: String,  // GOOGLE_BILLING_ACCOUNT_2
+    val custId: String,           // GOOGLE_CUST_ID
+    val org: String,              // GOOGLE_ORG
+    val orgDomain: String,        // GOOGLE_ORG_DOMAIN
+    val region: String,           // GOOGLE_REGION
+    val zone: String,             // GOOGLE_ZONE
+)
+
+// AccTestConfiguration is used to easily pass values set via Context Parameters into build configurations.
 class AccTestConfiguration(
     val billingAccount: String,
     val billingAccount2: String,
@@ -30,6 +82,66 @@ class AccTestConfiguration(
     val serviceAccount: String,
     val zone: String,
 )
+
+fun getGaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfiguration {
+    return AccTestConfiguration(
+        allConfig.billingAccount,
+        allConfig.billingAccount2,
+        allConfig.credentialsGa,
+        allConfig.custId,
+        allConfig.firestoreProjectGa,
+        allConfig.identityUserGa,
+        allConfig.masterBillingAccountGa,
+        allConfig.org,
+        allConfig.org2Ga,
+        allConfig.orgDomain,
+        allConfig.projectGa,
+        allConfig.projectNumberGa,
+        allConfig.region,
+        allConfig.serviceAccountGa,
+        allConfig.zone
+    )
+}
+
+fun getBetaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfiguration {
+    return AccTestConfiguration(
+        allConfig.billingAccount,
+        allConfig.billingAccount2,
+        allConfig.credentialsBeta,
+        allConfig.custId,
+        allConfig.firestoreProjectBeta,
+        allConfig.identityUserBeta,
+        allConfig.masterBillingAccountBeta,
+        allConfig.org,
+        allConfig.org2Beta,
+        allConfig.orgDomain,
+        allConfig.projectBeta,
+        allConfig.projectNumberBeta,
+        allConfig.region,
+        allConfig.serviceAccountBeta,
+        allConfig.zone
+    )
+}
+
+fun getVcrAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfiguration {
+    return AccTestConfiguration(
+        allConfig.billingAccount,
+        allConfig.billingAccount2,
+        allConfig.credentialsVcr,
+        allConfig.custId,
+        allConfig.firestoreProjectVcr,
+        allConfig.identityUserVcr,
+        allConfig.masterBillingAccountVcr,
+        allConfig.org,
+        allConfig.org2Vcr,
+        allConfig.orgDomain,
+        allConfig.projectVcr,
+        allConfig.projectNumberVcr,
+        allConfig.region,
+        allConfig.serviceAccountVcr,
+        allConfig.zone
+    )
+}
 
 // ParametrizedWithType.configureGoogleSpecificTestParameters allows build configs to be created
 // with the environment variables needed to configure the provider and/or configure test code.

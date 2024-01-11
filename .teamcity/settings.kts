@@ -16,50 +16,83 @@ version = "2023.11"
 // Due to this, the code needs to explicitly pull in values via the DSL and pass the values into other code.
 // For DslContext docs, see https://teamcity.jetbrains.com/app/dsl-documentation/root/dsl-context/index.html
 
-// PROVIDER / TEST CONFIGURATION
-// Used to set ENVs needed for acceptance tests within the build configurations.
-var billingAccount = DslContext.getParameter("billingAccount", "")
-var billingAccount2 = DslContext.getParameter("billingAccount2", "")
-var credentials = DslContext.getParameter("credentials", "")
-var custId = DslContext.getParameter("custId", "")
-var firestoreProject = DslContext.getParameter("firestoreProject", "")
-var identityUser = DslContext.getParameter("identityUser", "")
-var masterBillingAccount = DslContext.getParameter("masterBillingAccount", "")
-var org = DslContext.getParameter("org", "")
-var org2 = DslContext.getParameter("org2", "")
-var orgDomain = DslContext.getParameter("orgDomain", "")
-var project = DslContext.getParameter("project", "")
-var projectNumber = DslContext.getParameter("projectNumber", "")
-var region = DslContext.getParameter("region", "")
-var serviceAccount = DslContext.getParameter("serviceAccount", "")
-var zone = DslContext.getParameter("zone", "")
+// Context parameters below are used to set ENVs needed for acceptance tests within the build configurations.
 
-// Create AccTestConfiguration object that contains the above values to be set as environment variables on builds
-// Separate configs are made for:
-// - Use of the GA nightly tests project
-// - Use of the GA PR tests project
-// - Use of the Beta nightly tests project
-// - Use of the Beta PR tests project
+// GOOGLE_CREDENTIALS
+val credentialsGa   = DslContext.getParameter("credentialsGa", "")
+val credentialsBeta = DslContext.getParameter("credentialsBeta", "")
+val credentialsVcr  = DslContext.getParameter("credentialsVcr", "")
+// GOOGLE_SERVICE_ACCOUNT
+val serviceAccountGa   = DslContext.getParameter("serviceAccountGa", "")
+val serviceAccountBeta = DslContext.getParameter("serviceAccountBeta", "")
+val serviceAccountVcr  = DslContext.getParameter("serviceAccountVcr", "")
+// GOOGLE_PROJECT & GOOGLE_PROJECT_NUMBER
+val projectGa         = DslContext.getParameter("projectGa", "")
+val projectBeta       = DslContext.getParameter("projectBeta", "")
+val projectVcr        = DslContext.getParameter("projectVcr", "")
+val projectNumberGa   = DslContext.getParameter("projectNumberGa", "")
+val projectNumberBeta = DslContext.getParameter("projectNumberBeta", "")
+val projectNumberVcr  = DslContext.getParameter("projectNumberVcr", "")
+// GOOGLE_IDENTITY_USER
+val identityUserGa   = DslContext.getParameter("identityUserGa", "")
+val identityUserBeta = DslContext.getParameter("identityUserBeta", "")
+val identityUserVcr  = DslContext.getParameter("identityUserVcr", "")
+// GOOGLE_FIRESTORE_PROJECT
+val firestoreProjectGa   = DslContext.getParameter("firestoreProjectGa", "")
+val firestoreProjectBeta = DslContext.getParameter("firestoreProjectBeta", "")
+val firestoreProjectVcr  = DslContext.getParameter("firestoreProjectVcr", "")
+// GOOGLE_MASTER_BILLING_ACCOUNT
+val masterBillingAccountGa   = DslContext.getParameter("masterBillingAccountGa", "")
+val masterBillingAccountBeta = DslContext.getParameter("masterBillingAccountBeta", "")
+val masterBillingAccountVcr  = DslContext.getParameter("masterBillingAccountVcr", "")
+// GOOGLE_ORG_2
+val org2Ga   = DslContext.getParameter("org2Ga", "")
+val org2Beta = DslContext.getParameter("org2Beta", "")
+val org2Vcr  = DslContext.getParameter("org2Vcr", "")
 
-// TODO - refactor how we handle context parameters and convert to config for the 4 cases above
-var configuration = AccTestConfiguration(
+// Values that are the same across GA, Beta, and VCR testing environments
+val billingAccount  = DslContext.getParameter("billingAccount", "")   // GOOGLE_BILLING_ACCOUNT
+val billingAccount2 = DslContext.getParameter("billingAccount2", "")  // GOOGLE_BILLING_ACCOUNT_2
+val custId          = DslContext.getParameter("custId", "")           // GOOGLE_CUST_ID
+val org             = DslContext.getParameter("org", "")              // GOOGLE_ORG
+val orgDomain       = DslContext.getParameter("orgDomain", "")        // GOOGLE_ORG_DOMAIN
+val region          = DslContext.getParameter("region", "")           // GOOGLE_REGION
+val zone            = DslContext.getParameter("zone", "")             // GOOGLE_ZONE
+
+var allContextParams = AllContextParameters(
+    credentialsGa,
+    credentialsBeta,
+    credentialsVcr,
+    serviceAccountGa,
+    serviceAccountBeta,
+    serviceAccountVcr,
+    projectGa,
+    projectBeta,
+    projectVcr,
+    projectNumberGa,
+    projectNumberBeta,
+    projectNumberVcr,
+    identityUserGa,
+    identityUserBeta,
+    identityUserVCR,
+    firestoreProjectGa,
+    firestoreProjectBeta,
+    firestoreProjectVcr,
+    masterBillingAccountGa,
+    masterBillingAccountBeta,
+    masterBillingAccountVcr,
+    org2Ga,
+    org2Beta,
+    org2Vcr,
     billingAccount,
     billingAccount2,
-    credentials,
     custId,
-    firestoreProject,
-    identityUser,
-    masterBillingAccount,
     org,
-    org2,
     orgDomain,
-    project,
-    projectNumber,
     region,
-    serviceAccount,
-    zone
+    zone,
 )
 
 // This is the entry point of the code in .teamcity/
 // See https://teamcity.jetbrains.com/app/dsl-documentation/root/project.html
-project(googleCloudRootProject(configuration))
+project(googleCloudRootProject(allContextParams))

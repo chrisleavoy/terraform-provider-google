@@ -1,8 +1,7 @@
 package projects
 
 import ProviderNameGa
-import builds.AccTestConfiguration
-import builds.readOnlySettings
+import builds.*
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.RelativeId
 import projects.reused.mmUpstream
@@ -12,9 +11,13 @@ import vcs_roots.HashiCorpVCSRootGa
 import vcs_roots.ModularMagicianVCSRootGa
 
 // googleSubProjectGa returns a subproject that is used for testing terraform-provider-google (GA)
-fun googleSubProjectGa(config: AccTestConfiguration): Project {
+fun googleSubProjectGa(allConfig: AllContextParameters): Project {
 
     var gaId = replaceCharsId("GOOGLE")
+
+    // Get config for using the GA and VCR identities
+    val gaConfig = getGaAcceptanceTestConfig(allConfig)
+    val vcrConfig = getVcrAcceptanceTestConfig(allConfig)
 
     return Project{
         id(gaId)
@@ -22,10 +25,10 @@ fun googleSubProjectGa(config: AccTestConfiguration): Project {
         description = "Subproject containing builds for testing the GA version of the Google provider"
 
         // Nightly Test project that uses hashicorp/terraform-provider-google
-        subProject(nightlyTests(gaId, ProviderNameGa, HashiCorpVCSRootGa, config))
+        subProject(nightlyTests(gaId, ProviderNameGa, HashiCorpVCSRootGa, gaConfig))
 
         // MM Upstream project that uses modular-magician/terraform-provider-google
-        subProject(mmUpstream(gaId, ProviderNameGa, ModularMagicianVCSRootGa, config))
+        subProject(mmUpstream(gaId, ProviderNameGa, ModularMagicianVCSRootGa, vcrConfig))
 
         params {
             readOnlySettings()

@@ -48,9 +48,9 @@ fun googleCloudRootProject(config: AccTestConfiguration): Project {
             }
         }
 
-        subProjects(googleSubProjectGa(config)) // TODO - GA specific configs - nightly and PR
-        subProjects(googleSubProjectBeta(config)) // TODO - Beta specific configs - nightly and PR
-        
+        subProject(googleSubProjectGa(config)) // TODO - GA specific configs - nightly and PR
+        subProject(googleSubProjectBeta(config)) // TODO - Beta specific configs - nightly and PR
+
         params {
             readOnlySettings()
         }

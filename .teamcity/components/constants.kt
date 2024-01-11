@@ -34,6 +34,6 @@ const val SharedResourceNamePr = "ci-test-project-188019 Service Lock"
 
 // Build configuration names referenced in multiple places
 const val ServiceSweeperName = "Service Sweeper"
-// const val ProjectSweeperName = "Project Sweeper"
+const val ProjectSweeperName = "Project Sweeper"
 const val NightlyTestsProjectId = "NightlyTests"
 const val MMUpstreamProjectId = "MMUpstreamTests"

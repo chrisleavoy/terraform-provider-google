@@ -2,6 +2,7 @@ package builds
 
 import DefaultBuildTimeoutDuration
 import DefaultParallelism
+import generated.ServiceParallelism
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.SharedResource
 import jetbrains.buildServer.configs.kotlin.sharedResources
@@ -17,7 +18,7 @@ fun BuildConfigurationsForPackages(packages: Map<String, Map<String, String>>, p
         val displayName: String = info.getValue("displayName").toString()
 
         val pkg = PackageDetails(packageName, displayName, providerName, parentProjectName)
-        val buildConfig = pkg.buildConfiguration(path, vcsRoot, sharedResources, DefaultParallelism, environmentVariables)
+        val buildConfig = pkg.buildConfiguration(path, vcsRoot, sharedResources, environmentVariables)
         list.add(buildConfig)
     }
 
@@ -28,10 +29,15 @@ class PackageDetails(private val packageName: String, private val displayName: S
 
     // buildConfiguration returns a BuildType for a service package
     // For BuildType docs, see https://teamcity.jetbrains.com/app/dsl-documentation/root/build-type/index.html
-    fun buildConfiguration(path: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, parallelism: Int, environmentVariables: AccTestConfiguration, buildTimeout: Int = DefaultBuildTimeoutDuration): BuildType {
+    fun buildConfiguration(path: String, vcsRoot: GitVcsRoot, sharedResources: List<String>, environmentVariables: AccTestConfiguration, buildTimeout: Int = DefaultBuildTimeoutDuration): BuildType {
 
         val testPrefix = "TestAcc"
         val testTimeout = "12"
+
+        var parallelism = DefaultParallelism
+        if (ServiceParallelism.containsKey(packageName)){
+            parallelism = ServiceParallelism.getValue(packageName)
+        }
 
         return BuildType {
             // TC needs a consistent ID for dynamically generated packages

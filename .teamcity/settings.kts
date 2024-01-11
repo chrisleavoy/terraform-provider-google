@@ -6,7 +6,7 @@
 // this file is auto-generated with mmv1, any changes made here will be overwritten
 
 import projects.googleCloudRootProject
-import builds.AccTestConfiguration
+import builds.AllContextParameters
 import jetbrains.buildServer.configs.kotlin.*
 
 version = "2023.11"
@@ -74,7 +74,7 @@ var allContextParams = AllContextParameters(
     projectNumberVcr,
     identityUserGa,
     identityUserBeta,
-    identityUserVCR,
+    identityUserVcr,
     firestoreProjectGa,
     firestoreProjectBeta,
     firestoreProjectVcr,

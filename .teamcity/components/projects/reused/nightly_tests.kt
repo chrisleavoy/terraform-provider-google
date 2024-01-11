@@ -6,15 +6,19 @@ import ProviderNameGa
 import ServiceSweeperName
 import SharedResourceNameBeta
 import SharedResourceNameGa
-import SharedResourceNamePr
 import builds.*
 import generated.PackagesList
 import generated.ServicesList
 import generated.SweepersList
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
+import replaceCharsId
 
-fun nightlyTests(providerName: String, vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
+fun nightlyTests(parentProject:String, providerName: String, vcsRoot: GitVcsRoot, config: AccTestConfiguration): Project {
+
+    // Create unique ID for the dynamically-created project
+    var projectId = "${parentProject}_${NightlyTestsProjectId}"
+    projectId = replaceCharsId(projectId)
 
     // Nightly test projects run all acceptance tests overnight
     // Here we ensure the project uses the appropriate Shared Resource to ensure no clashes between builds and/or sweepers
@@ -30,17 +34,17 @@ fun nightlyTests(providerName: String, vcsRoot: GitVcsRoot, config: AccTestConfi
 
     // Create build configs to run acceptance tests for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList
-    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, providerName, NightlyTestsProjectId, vcsRoot, sharedResources, config)
+    val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, providerName, projectId, vcsRoot, sharedResources, config)
     packageBuildConfigs.forEach { buildConfiguration ->
         buildConfiguration.addTrigger(trigger)
     }
 
     // Create build config for sweeping the nightly test project
-    val serviceSweeperConfig = BuildConfigurationForSweeper(providerName, ServiceSweeperName, SweepersList, NightlyTestsProjectId, vcsRoot, sharedResources, config)
+    val serviceSweeperConfig = BuildConfigurationForSweeper(providerName, ServiceSweeperName, SweepersList, projectId, vcsRoot, sharedResources, config)
     serviceSweeperConfig.addTrigger(trigger)
 
     return Project {
-        id(NightlyTestsProjectId)
+        id(projectId)
         name = "Nightly Tests"
         description = "A project connected to the hashicorp/terraform-provider-${providerName} repository, where scheduled nightly tests run and users can trigger ad-hoc builds"
 

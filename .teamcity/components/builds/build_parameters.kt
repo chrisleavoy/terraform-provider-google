@@ -66,6 +66,11 @@ fun ParametrizedWithType.terraformSweeperParameters(sweeperRegions: String, swee
     text("SWEEP_RUN", sweepRun)
 }
 
+// ParametrizedWithType.terraformSkipProjectSweeper sets a build parameters to skip the sweeper for project resources
+fun ParametrizedWithType.terraformSkipProjectSweeper() {
+    text("SKIP_PROJECT_SWEEPER", "1")
+}
+
 // ParametrizedWithType.terraformLoggingParameters sets environment variables and build parameters that
 // affect which logs are shown and allows them to be saved
 fun ParametrizedWithType.terraformLoggingParameters() {

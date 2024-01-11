@@ -34,6 +34,7 @@ fun Triggers.runNightly(config: NightlyTriggerConfiguration) {
     }
 }
 
+// BuildType.addTrigger enables adding a CRON trigger after a build configuration has been initialised
 fun BuildType.addTrigger(triggerConfig: NightlyTriggerConfiguration){
     triggers {
         runNightly(triggerConfig)

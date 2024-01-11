@@ -1,6 +1,7 @@
 package builds
 
 import DefaultTerraformCoreVersion
+import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.ParameterDisplay
 import jetbrains.buildServer.configs.kotlin.ParametrizedWithType
 
@@ -68,6 +69,18 @@ fun ParametrizedWithType.terraformSweeperParameters(sweeperRegions: String, swee
 // ParametrizedWithType.terraformSkipProjectSweeper sets a build parameters to skip the sweeper for project resources
 fun ParametrizedWithType.terraformSkipProjectSweeper() {
     text("SKIP_PROJECT_SWEEPER", "1")
+}
+
+// ParametrizedWithType.terraformEnableProjectSweeper unsets a build parameter used to skip the sweeper for project resources
+fun ParametrizedWithType.terraformEnableProjectSweeper() {
+    text("SKIP_PROJECT_SWEEPER", "")
+}
+
+// BuildType.enableProjectSweep enables sweeping project resources after a build configuration has been initialised
+fun BuildType.enableProjectSweep(){
+    params {
+        terraformEnableProjectSweeper()
+    }
 }
 
 // ParametrizedWithType.terraformLoggingParameters sets environment variables and build parameters that

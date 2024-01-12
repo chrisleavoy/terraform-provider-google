@@ -178,14 +178,14 @@ fun ParametrizedWithType.terraformSweeperParameters(sweeperRegions: String, swee
     text("SWEEP_RUN", sweepRun)
 }
 
-// ParametrizedWithType.terraformSkipProjectSweeper sets a build parameters to skip the sweeper for project resources
+// ParametrizedWithType.terraformSkipProjectSweeper sets an environment variable to skip the sweeper for project resources
 fun ParametrizedWithType.terraformSkipProjectSweeper() {
-    text("SKIP_PROJECT_SWEEPER", "1")
+    text("env.SKIP_PROJECT_SWEEPER", "1")
 }
 
-// ParametrizedWithType.terraformEnableProjectSweeper unsets a build parameter used to skip the sweeper for project resources
+// ParametrizedWithType.terraformEnableProjectSweeper unsets an environment variable used to skip the sweeper for project resources
 fun ParametrizedWithType.terraformEnableProjectSweeper() {
-    text("SKIP_PROJECT_SWEEPER", "")
+    text("env.SKIP_PROJECT_SWEEPER", "")
 }
 
 // BuildType.enableProjectSweep enables sweeping project resources after a build configuration has been initialised

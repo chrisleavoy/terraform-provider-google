@@ -2,7 +2,7 @@ package projects
 
 import SharedResourceNameBeta
 import SharedResourceNameGa
-import SharedResourceNamePr
+import SharedResourceNameVcr
 import builds.AccTestConfiguration
 import builds.AllContextParameters
 import builds.readOnlySettings
@@ -43,7 +43,7 @@ fun googleCloudRootProject(allConfig: AllContextParameters): Project {
             // For controlling sweeping of the PR testing project
             sharedResource {
                 id = "PR_SERVICE_LOCK_SHARED_RESOURCE"
-                name = SharedResourceNamePr
+                name = SharedResourceNameVcr
                 enabled = true
                 resourceType = customValues(GetServiceNameList() + GetPackageNameList())
             }

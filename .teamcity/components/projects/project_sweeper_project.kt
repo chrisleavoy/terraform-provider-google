@@ -3,7 +3,7 @@ package projects
 import ProjectSweeperName
 import SharedResourceNameBeta
 import SharedResourceNameGa
-import SharedResourceNamePr
+import SharedResourceNameVcr
 import builds.*
 import generated.SweepersList
 import jetbrains.buildServer.configs.kotlin.Project
@@ -20,7 +20,7 @@ fun projectSweeperSubProject(allConfig: AllContextParameters): Project {
     val gaConfig = getGaAcceptanceTestConfig(allConfig)
 
     // List of ALL shared resources; avoid clashing with any other running build
-    val sharedResources: List<String> = listOf(SharedResourceNameGa, SharedResourceNameBeta, SharedResourceNamePr)
+    val sharedResources: List<String> = listOf(SharedResourceNameGa, SharedResourceNameBeta, SharedResourceNameVcr)
 
     // Create build config for sweeping project resources
     // Uses the HashiCorpVCSRootGa VCS Root so that the latest sweepers in hashicorp/terraform-provider-google are used

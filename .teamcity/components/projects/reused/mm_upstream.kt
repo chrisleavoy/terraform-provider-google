@@ -2,7 +2,7 @@ package projects.reused
 
 import MMUpstreamProjectId
 import ServiceSweeperName
-import SharedResourceNamePr
+import SharedResourceNameVcr
 import builds.*
 import generated.PackagesList
 import generated.ServicesList
@@ -19,7 +19,7 @@ fun mmUpstream(parentProject: String, providerName: String, vcsRoot: GitVcsRoot,
     projectId = replaceCharsId(projectId)
 
     // Shared resource allows ad hoc builds and sweeper builds to not clash
-    var sharedResources: List<String> = listOf(SharedResourceNamePr)
+    var sharedResources: List<String> = listOf(SharedResourceNameVcr)
 
     // Create build configs for each package defined in packages.kt and services.kt files
     val allPackages = PackagesList + ServicesList

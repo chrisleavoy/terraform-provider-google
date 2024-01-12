@@ -62,7 +62,10 @@ class AllContextParameters(
     val orgDomain: String,        // GOOGLE_ORG_DOMAIN
     val region: String,           // GOOGLE_REGION
     val zone: String,             // GOOGLE_ZONE
-)
+
+    // VCR specific
+    val infraProject: String,     // GOOGLE_INFRA_PROJECT
+    )
 
 // AccTestConfiguration is used to easily pass values set via Context Parameters into build configurations.
 class AccTestConfiguration(
@@ -81,7 +84,10 @@ class AccTestConfiguration(
     val region: String,
     val serviceAccount: String,
     val zone: String,
-)
+
+    // VCR specific
+    val infraProject: String,
+    )
 
 fun getGaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfiguration {
     return AccTestConfiguration(
@@ -99,7 +105,8 @@ fun getGaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigura
         allConfig.projectNumberGa,
         allConfig.region,
         allConfig.serviceAccountGa,
-        allConfig.zone
+        allConfig.zone,
+        allConfig.infraProject
     )
 }
 
@@ -119,7 +126,8 @@ fun getBetaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigu
         allConfig.projectNumberBeta,
         allConfig.region,
         allConfig.serviceAccountBeta,
-        allConfig.zone
+        allConfig.zone,
+        allConfig.infraProject
     )
 }
 
@@ -139,7 +147,8 @@ fun getVcrAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigur
         allConfig.projectNumberVcr,
         allConfig.region,
         allConfig.serviceAccountVcr,
-        allConfig.zone
+        allConfig.zone,
+        allConfig.infraProject
     )
 }
 
@@ -193,6 +202,15 @@ fun BuildType.enableProjectSweep(){
     params {
         terraformEnableProjectSweeper()
     }
+}
+
+// ParametrizedWithType.terraformEnableProjectSweeper unsets an environment variable used to skip the sweeper for project resources
+fun ParametrizedWithType.vcrEnvironmentVariables(config: AccTestConfiguration) {
+    text("env.VCR_MODE", "")
+    text("env.VCR_PATH", "")
+    text("env.TEST", "")
+    text("env.TESTARGS", "")
+    hiddenVariable("env.GOOGLE_INFRA_PROJECT", config.infraProject, "The project that's linked to the GCS bucket storing VCR cassettes")
 }
 
 // ParametrizedWithType.terraformLoggingParameters sets environment variables and build parameters that

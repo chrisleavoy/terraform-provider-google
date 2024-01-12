@@ -6,9 +6,12 @@ import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.RelativeId
 import projects.reused.mmUpstream
 import projects.reused.nightlyTests
+import projects.reused.vcrRecording
 import replaceCharsId
 import vcs_roots.HashiCorpVCSRootBeta
+import vcs_roots.HashiCorpVCSRootGa
 import vcs_roots.ModularMagicianVCSRootBeta
+import vcs_roots.ModularMagicianVCSRootGa
 
 // googleSubProjectBeta returns a subproject that is used for testing terraform-provider-google-beta (Beta)
 fun googleSubProjectBeta(allConfig: AllContextParameters): Project {
@@ -29,6 +32,9 @@ fun googleSubProjectBeta(allConfig: AllContextParameters): Project {
 
         // MM Upstream project that uses modular-magician/terraform-provider-google-beta
         subProject(mmUpstream(betaId, ProviderNameBeta, ModularMagicianVCSRootBeta, vcrConfig))
+
+        // VCR recording project that allows VCR recordings to be made using hashicorp/terraform-provider-google-beta OR modular-magician/terraform-provider-google-beta
+        subProject(vcrRecording(betaId, ProviderNameBeta, HashiCorpVCSRootBeta, ModularMagicianVCSRootBeta, vcrConfig))
 
         params {
             readOnlySettings()

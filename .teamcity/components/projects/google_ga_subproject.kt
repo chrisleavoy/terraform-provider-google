@@ -6,6 +6,7 @@ import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.RelativeId
 import projects.reused.mmUpstream
 import projects.reused.nightlyTests
+import projects.reused.vcrRecording
 import replaceCharsId
 import vcs_roots.HashiCorpVCSRootGa
 import vcs_roots.ModularMagicianVCSRootGa
@@ -29,6 +30,9 @@ fun googleSubProjectGa(allConfig: AllContextParameters): Project {
 
         // MM Upstream project that uses modular-magician/terraform-provider-google
         subProject(mmUpstream(gaId, ProviderNameGa, ModularMagicianVCSRootGa, vcrConfig))
+
+        // VCR recording project that allows VCR recordings to be made using hashicorp/terraform-provider-google OR modular-magician/terraform-provider-google
+        subProject(vcrRecording(gaId, ProviderNameGa, HashiCorpVCSRootGa, ModularMagicianVCSRootGa, vcrConfig))
 
         params {
             readOnlySettings()

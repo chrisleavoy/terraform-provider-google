@@ -45,5 +45,6 @@ fun testContextParameters(): AllContextParameters {
         "org",
         "orgDomain",
         "region",
-        "zone")
+        "zone",
+        "infraProject")
 }

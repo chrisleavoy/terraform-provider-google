@@ -163,17 +163,17 @@ fun ParametrizedWithType.configureGoogleSpecificTestParameters(config: AccTestCo
     hiddenPasswordVariable("env.GOOGLE_CREDENTIALS", config.credentials, "The Google credentials for this test runner")
 }
 
-// ParametrizedWithType.terraformAcceptanceTestParameters sets environment variables and build parameters
-// that affect how the acceptance tests run.
-fun ParametrizedWithType.terraformAcceptanceTestParameters(parallelism: Int, prefix: String, timeout: String) {
+// ParametrizedWithType.acceptanceTestBuildParams sets build params that affect how commands to run
+//  acceptance tests are templated
+fun ParametrizedWithType.acceptanceTestBuildParams(parallelism: Int, prefix: String, timeout: String) {
     hiddenVariable("env.TF_ACC", "1", "Set to a value to run the Acceptance Tests")
     text("PARALLELISM", "%d".format(parallelism))
     text("TEST_PREFIX", prefix)
     text("TIMEOUT", timeout)
 }
 
-// ParametrizedWithType.terraformSweeperParameters sets build parameters that affect how sweepers are run
-fun ParametrizedWithType.terraformSweeperParameters(sweeperRegions: String, sweepRun: String) {
+// ParametrizedWithType.sweeperParameters sets build parameters that affect how sweepers are run
+fun ParametrizedWithType.sweeperParameters(sweeperRegions: String, sweepRun: String) {
     text("SWEEPER_REGIONS", sweeperRegions)
     text("SWEEP_RUN", sweepRun)
 }
@@ -212,9 +212,11 @@ fun ParametrizedWithType.readOnlySettings() {
     hiddenVariable("teamcity.ui.settings.readOnly", "true", "Requires build configurations be edited via Kotlin")
 }
 
+// ParametrizedWithType.terraformCoreBinaryTesting sets environment variables that control what Terraform version is downloaded
+// and ensures the testing framework uses that downloaded version
 fun ParametrizedWithType.terraformCoreBinaryTesting() {
     text("env.TERRAFORM_CORE_VERSION", DefaultTerraformCoreVersion, "The version of Terraform Core which should be used for testing")
-    hiddenVariable("env.TF_ACC_TERRAFORM_PATH", "%system.teamcity.build.checkoutDir%/tools/terraform", "The path where the Terraform Binary is located")
+    hiddenVariable("env.TF_ACC_TERRAFORM_PATH", "%system.teamcity.build.checkoutDir%/tools/terraform", "The path where the Terraform Binary is located. Used by the testing framework.")
 }
 
 fun ParametrizedWithType.terraformShouldPanicForSchemaErrors() {

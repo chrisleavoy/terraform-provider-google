@@ -17,8 +17,8 @@ fun vcrRecording(parentProject:String, providerName: String, hashicorpVcsRoot: G
     var projectId = "${parentProject}_${VcrRecordingProjectId}"
     projectId = replaceCharsId(projectId)
 
-    var buildIdHashiCorp = replaceCharsId("${providerName}_HASHI_VCR")
-    var buildIdModularMagician = replaceCharsId("${providerName}_MM_VCR")
+    var buildIdHashiCorp = replaceCharsId("${providerName}_HASHICORP_VCR")
+    var buildIdModularMagician = replaceCharsId("${providerName}_MODMAGICIAN_VCR")
 
     // Shared resource allows VCR recording process to not class with acceptance test or sweeper
     var sharedResources: List<String> = listOf(SharedResourceNameVcr)
@@ -34,9 +34,10 @@ fun vcrRecording(parentProject:String, providerName: String, hashicorpVcsRoot: G
     return Project {
         id(projectId)
         name = "VCR Recording"
-//        description = "A project connected to the hashicorp/terraform-provider-${providerName} repository, where users can trigger ad-hoc tests to re-record VCR cassettes"
+       description = "A project connected to the hashicorp/terraform-provider-${providerName} repository, where users can trigger ad-hoc tests to re-record VCR cassettes"
 
         buildType(
+            // TODO - pull this into a function and re-use to make both VCR build configs in this project
             BuildType {
                 id(buildIdHashiCorp)
 

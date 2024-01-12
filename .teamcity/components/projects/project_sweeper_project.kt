@@ -32,7 +32,7 @@ fun projectSweeperSubProject(allConfig: AllContextParameters): Project {
     return Project{
         id(projectId)
         name = "Project Sweeper"
-        description = "Project containing a build configuration for sweeping project resources"
+        description = "Subproject containing a build configuration for sweeping project resources"
 
         // Register build configs in the project
         buildType(serviceSweeperConfig)

@@ -205,11 +205,11 @@ fun BuildType.enableProjectSweep(){
 }
 
 // ParametrizedWithType.terraformEnableProjectSweeper unsets an environment variable used to skip the sweeper for project resources
-fun ParametrizedWithType.vcrEnvironmentVariables(config: AccTestConfiguration) {
-    text("env.VCR_MODE", "")
+fun ParametrizedWithType.vcrEnvironmentVariables(config: AccTestConfiguration, providerName: String) {
+    text("env.VCR_MODE", "RECORDING")
     text("env.VCR_PATH", "./fixtures")
-    text("env.TEST", "")
-    text("env.TESTARGS", "")
+    text("env.TEST", "./${providerName}/...")
+    text("env.TESTARGS", "-run=%TEST_PREFIX%")
     hiddenVariable("env.GOOGLE_INFRA_PROJECT", config.infraProject, "The project that's linked to the GCS bucket storing VCR cassettes")
 }
 

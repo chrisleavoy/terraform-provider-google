@@ -72,6 +72,7 @@ fun vcrRecording(parentProject:String, providerName: String, hashicorpVcsRoot: G
 
                 params {
                     configureGoogleSpecificTestParameters(config)
+                    vcrEnvironmentVariables(config)
                     acceptanceTestBuildParams(parallelism, testPrefix, testTimeout)
                     terraformLoggingParameters(providerName)
                     terraformCoreBinaryTesting()

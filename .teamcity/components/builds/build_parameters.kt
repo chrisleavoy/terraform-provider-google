@@ -155,12 +155,12 @@ fun getVcrAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigur
 // ParametrizedWithType.configureGoogleSpecificTestParameters allows build configs to be created
 // with the environment variables needed to configure the provider and/or configure test code.
 fun ParametrizedWithType.configureGoogleSpecificTestParameters(config: AccTestConfiguration) {
-    hiddenPasswordVariable("env.GOOGLE_BILLING_ACCOUNT", config.billingAccount, "The billing account associated with the first google organization")
-    hiddenPasswordVariable("env.GOOGLE_BILLING_ACCOUNT_2", config.billingAccount2, "The billing account associated with the second google organization")
-    hiddenPasswordVariable("env.GOOGLE_CUST_ID", config.custId, "The ID of the Google Identity Customer")
-    hiddenPasswordVariable("env.GOOGLE_ORG", config.org, "The Google Organization Id")
-    hiddenPasswordVariable("env.GOOGLE_ORG_2", config.org2, "The second Google Organization Id")
-    hiddenPasswordVariable("env.GOOGLE_MASTER_BILLING_ACCOUNT", config.masterBillingAccount, "The master billing account")
+    hiddenVariable("env.GOOGLE_BILLING_ACCOUNT", config.billingAccount, "The billing account associated with the first google organization")
+    hiddenVariable("env.GOOGLE_BILLING_ACCOUNT_2", config.billingAccount2, "The billing account associated with the second google organization")
+    hiddenVariable("env.GOOGLE_CUST_ID", config.custId, "The ID of the Google Identity Customer")
+    hiddenVariable("env.GOOGLE_ORG", config.org, "The Google Organization Id")
+    hiddenVariable("env.GOOGLE_ORG_2", config.org2, "The second Google Organization Id")
+    hiddenVariable("env.GOOGLE_MASTER_BILLING_ACCOUNT", config.masterBillingAccount, "The master billing account")
     hiddenVariable("env.GOOGLE_PROJECT", config.project, "The google project for this build")
     hiddenVariable("env.GOOGLE_ORG_DOMAIN", config.orgDomain, "The org domain")
     hiddenVariable("env.GOOGLE_PROJECT_NUMBER", config.projectNumber, "The project number associated with the project")

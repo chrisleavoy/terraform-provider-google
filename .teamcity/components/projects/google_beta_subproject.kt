@@ -34,6 +34,7 @@ fun googleSubProjectBeta(allConfig: AllContextParameters): Project {
         subProject(mmUpstream(betaId, ProviderNameBeta, ModularMagicianVCSRootBeta, vcrConfig))
 
         // VCR recording project that allows VCR recordings to be made using hashicorp/terraform-provider-google-beta OR modular-magician/terraform-provider-google-beta
+        // This is only present for the Beta provider, as only TPGB VCR recordings are used.
         subProject(vcrRecording(betaId, ProviderNameBeta, HashiCorpVCSRootBeta, ModularMagicianVCSRootBeta, vcrConfig))
 
         params {

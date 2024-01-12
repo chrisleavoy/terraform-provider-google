@@ -31,9 +31,6 @@ fun googleSubProjectGa(allConfig: AllContextParameters): Project {
         // MM Upstream project that uses modular-magician/terraform-provider-google
         subProject(mmUpstream(gaId, ProviderNameGa, ModularMagicianVCSRootGa, vcrConfig))
 
-        // VCR recording project that allows VCR recordings to be made using hashicorp/terraform-provider-google OR modular-magician/terraform-provider-google
-        subProject(vcrRecording(gaId, ProviderNameGa, HashiCorpVCSRootGa, ModularMagicianVCSRootGa, vcrConfig))
-
         params {
             readOnlySettings()
         }

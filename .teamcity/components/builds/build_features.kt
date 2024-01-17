@@ -1,9 +1,6 @@
 package builds
 
-import generated.GetServiceNameList
-import generated.ServicesList
 import jetbrains.buildServer.configs.kotlin.BuildFeatures
-import jetbrains.buildServer.configs.kotlin.SharedResources
 import jetbrains.buildServer.configs.kotlin.buildFeatures.GolangFeature
 
 // NOTE: this file includes Extensions of the Kotlin DSL class BuildFeature

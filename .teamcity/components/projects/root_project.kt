@@ -3,11 +3,11 @@ package projects
 import SharedResourceNameBeta
 import SharedResourceNameGa
 import SharedResourceNameVcr
-import builds.AccTestConfiguration
 import builds.AllContextParameters
 import builds.readOnlySettings
 import generated.GetPackageNameList
-import generated.GetServiceNameList
+import generated.ServicesListGa
+import generated.ServicesListBeta
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.sharedResource
 
@@ -31,21 +31,21 @@ fun googleCloudRootProject(allConfig: AllContextParameters): Project {
                 id = "GA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNameGa
                 enabled = true
-                resourceType = customValues(GetServiceNameList() + GetPackageNameList())
+                resourceType = customValues(getServiceNameList(ServicesListGa) + GetPackageNameList())
             }
             // For controlling sweeping of the Beta nightly test project
             sharedResource {
                 id = "BETA_NIGHTLY_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNameBeta
                 enabled = true
-                resourceType = customValues(GetServiceNameList() + GetPackageNameList())
+                resourceType = customValues(getServiceNameList(ServicesListBeta) + GetPackageNameList())
             }
             // For controlling sweeping of the PR testing project
             sharedResource {
                 id = "PR_SERVICE_LOCK_SHARED_RESOURCE"
                 name = SharedResourceNameVcr
                 enabled = true
-                resourceType = customValues(GetServiceNameList() + GetPackageNameList())
+                resourceType = customValues(getServiceNameList(ServicesListBeta) + GetPackageNameList()) // Use Beta list of services here, assuming Beta is a superset of GA
             }
         }
 
@@ -57,4 +57,13 @@ fun googleCloudRootProject(allConfig: AllContextParameters): Project {
             readOnlySettings()
         }
     }
+}
+
+fun getServiceNameList(servicesList: Map<String, Map<String,String>>): List<String> {
+    var serviceNameList: ArrayList<String> = arrayListOf()
+    servicesList.forEach{ s ->
+        var serviceName = s.value.getValue("name").toString()
+        serviceNameList.add(serviceName)
+    }
+    return serviceNameList
 }

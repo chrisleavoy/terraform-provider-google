@@ -1,11 +1,14 @@
 package projects.reused
 
 import MMUpstreamProjectId
+import ProviderNameBeta
+import ProviderNameGa
 import ServiceSweeperName
 import SharedResourceNameVcr
 import builds.*
 import generated.PackagesList
-import generated.ServicesList
+import generated.ServicesListGa
+import generated.ServicesListBeta
 import generated.SweepersList
 import jetbrains.buildServer.configs.kotlin.BuildType
 import jetbrains.buildServer.configs.kotlin.Project
@@ -21,8 +24,8 @@ fun mmUpstream(parentProject: String, providerName: String, vcsRoot: GitVcsRoot,
     // Shared resource allows ad hoc builds and sweeper builds to not clash
     var sharedResources: List<String> = listOf(SharedResourceNameVcr)
 
-    // Create build configs for each package defined in packages.kt and services.kt files
-    val allPackages = PackagesList + ServicesList
+    // Create build configs for each package defined in packages.kt and services_ga.kt/services_beta.kt files
+    val allPackages = getAllPackageInProviderVersion(providerName)
     val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, providerName, projectId, vcsRoot, sharedResources, config)
 
     // Create build config for sweeping the nightly test project - everything except projects
@@ -45,4 +48,15 @@ fun mmUpstream(parentProject: String, providerName: String, vcsRoot: GitVcsRoot,
             configureGoogleSpecificTestParameters(config)
         }
     }
+}
+
+fun getAllPackageInProviderVersion(providerName: String): Map<String, Map<String,String>> {
+    var allPackages: Map<String, Map<String, String>> = mapOf()
+    if (providerName == ProviderNameGa){
+        allPackages = PackagesList + ServicesListGa
+    }
+    if (providerName == ProviderNameBeta){
+        allPackages = PackagesList + ServicesListBeta
+    }
+    return allPackages
 }

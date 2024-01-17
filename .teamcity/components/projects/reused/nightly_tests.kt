@@ -8,7 +8,6 @@ import SharedResourceNameBeta
 import SharedResourceNameGa
 import builds.*
 import generated.PackagesList
-import generated.ServicesList
 import generated.SweepersList
 import jetbrains.buildServer.configs.kotlin.Project
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
@@ -33,7 +32,7 @@ fun nightlyTests(parentProject:String, providerName: String, vcsRoot: GitVcsRoot
     val trigger  = NightlyTriggerConfiguration()
 
     // Create build configs to run acceptance tests for each package defined in packages.kt and services.kt files
-    val allPackages = PackagesList + ServicesList
+    val allPackages = getAllPackageInProviderVersion(providerName)
     val packageBuildConfigs = BuildConfigurationsForPackages(allPackages, providerName, projectId, vcsRoot, sharedResources, config)
     packageBuildConfigs.forEach { buildConfiguration ->
         buildConfiguration.addTrigger(trigger)

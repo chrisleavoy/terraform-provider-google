@@ -5,10 +5,10 @@ import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
 
 fun BuildSteps.checkVcrEnvironmentVariables() {
     step(ScriptBuildStep {
-        name = "Setup for running VCR tests: feedback about user-supplied environment variables"
+        name = "Setup for running VCR tests: feedback about user-supplied environment variables and available CLI tools"
         scriptContent = """
             #!/bin/bash
-            echo "VCR TESTING ENVIRONMENT VARIABLE CHECKS"
+            echo "VCR TESTING ENVIRONMENT CHECKS - ENVs and CLI TOOLS"
             if [ "${'$'}VCR_MODE" = "" ]; then
                 echo "VCR_MODE is not set"
                 exit 1

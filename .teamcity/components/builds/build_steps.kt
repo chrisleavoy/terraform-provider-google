@@ -15,17 +15,6 @@ fun BuildSteps.configureGoEnv() {
     })
 }
 
-fun BuildSteps.helloWorld(sharedResourceName: String) {
-    step(ScriptBuildStep {
-        name = "Hello World"
-        scriptContent = """
-            #!/bin/bash
-            echo "Hello World"
-            echo "Shared resource : %teamcity.locks.readLock.${sharedResourceName}%"
-        """.trimIndent()
-    })
-}
-
 fun BuildSteps.setGitCommitBuildId() {
     step(ScriptBuildStep {
         name = "Set build id as shortened git commit hash"

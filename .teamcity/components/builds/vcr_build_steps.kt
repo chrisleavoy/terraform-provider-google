@@ -55,29 +55,28 @@ fun BuildSteps.runVcrTestRecordingSetup() {
                 echo "Recording mode, skipping cassette retrieval"
                 exit 0
             fi
-            docker pull google/cloud-sdk:latest
-            docker run -t -d --name gcloud-config google/cloud-sdk
+
+            # REPLAY MODE - retrieve cassettes from GCS
+
+            # Authenticate gcloud CLI
             echo "${'$'}{GOOGLE_CREDENTIALS}" > google-account.json
-            sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' google-account.json > temp1.json
-            sed 's/{\\n/{/g' temp1.json > temp2.json
-            sed 's/,\\n/,/g' temp2.json > temp3.json
-            sed 's/"\\n}/"}/g' temp3.json > temp4.json
-            mv temp4.json google-account.json
-            rm temp*
-            docker cp google-account.json gcloud-config:sa-key.json
-            rm google-account.json
-            docker exec gcloud-config gcloud auth activate-service-account --key-file=sa-key.json
-            docker exec gcloud-config gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://ci-vcr-cassettes/fixtures/
-            docker exec gcloud-config mkdir fixtures
-            docker exec gcloud-config gsutil -m cp gs://ci-vcr-cassettes/fixtures/* fixtures/
+            gcloud auth activate-service-account --key-file=sa-key.json
+
+            # Pull files from GCS
+            gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://ci-vcr-cassettes/fixtures/
+            mkdir -p ${'$'}VCR_PATH
+            gsutil -m cp gs://ci-vcr-cassettes/fixtures/* ${'$'}VCR_PATH
             # copy branch specific cassettes over master. This might fail but that's ok if the folder doesnt exist
             export BRANCH_NAME = %teamcity.build.branch%
-            docker exec gcloud-config gsutil -m cp gs://ci-vcr-cassettes/%BRANCH_NAME%/fixtures/* fixtures/
-            mkdir -p ${'$'}VCR_PATH
-            docker cp gcloud-config:fixtures ${'$'}VCR_PATH/../
+            gsutil -m cp gs://ci-vcr-cassettes/${'$'}BRANCH_NAME/fixtures/* ${'$'}VCR_PATH
             ls ${'$'}VCR_PATH
-            docker stop gcloud-config
-            docker rm gcloud-config
+
+            # Cleanup
+            rm google-account.json
+            gcloud auth application-default revoke
+            gcloud auth revoke --all
+
+            echo "Finished"
         """.trimIndent()
         // ${'$'} is required to allow creating a script in TeamCity that contains
         // parts like ${GIT_HASH_SHORT} without having Kotlin syntax issues. For more info see:

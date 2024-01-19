@@ -48,6 +48,10 @@ fun BuildSteps.runVcrTestRecordingSetup() {
         name = "Setup for running VCR tests: if in REPLAY mode, download existing cassettes"
         scriptContent = """
             #!/bin/bash
+            
+            # check version
+            getconf LONG_BIT
+            
             echo "VCR TESTING SETUP"
             echo "VCR_PATH: ${'$'}{VCR_PATH}"
             echo "VCR_MODE: ${'$'}{VCR_MODE}"

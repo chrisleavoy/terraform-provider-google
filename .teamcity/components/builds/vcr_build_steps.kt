@@ -29,6 +29,18 @@ fun BuildSteps.checkVcrEnvironmentVariables() {
                 echo "TESTARGS is not set - set it to a value like -run=TestAccFoobar"
                 exit 1
             fi
+
+            if ! command -v gcloud &> /dev/null   
+            then
+                echo "gcloud CLI not found"
+                exit 1
+            fi
+
+            if ! command -v gsutil &> /dev/null   
+            then
+                echo "gsutil CLI not found"
+                exit 1
+            fi
         """.trimIndent()
         // ${'$'} is required to allow creating a script in TeamCity that contains
         // parts like ${GIT_HASH_SHORT} without having Kotlin syntax issues. For more info see:

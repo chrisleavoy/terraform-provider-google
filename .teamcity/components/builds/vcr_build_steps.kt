@@ -67,7 +67,7 @@ fun BuildSteps.runVcrTestRecordingSetup() {
             mkdir -p ${'$'}VCR_PATH
             gsutil -m cp gs://ci-vcr-cassettes/fixtures/* ${'$'}VCR_PATH
             # copy branch specific cassettes over master. This might fail but that's ok if the folder doesnt exist
-            export BRANCH_NAME = %teamcity.build.branch%
+            export BRANCH_NAME=%teamcity.build.branch%
             gsutil -m cp gs://ci-vcr-cassettes/${'$'}BRANCH_NAME/fixtures/* ${'$'}VCR_PATH
             ls ${'$'}VCR_PATH
 
@@ -102,7 +102,7 @@ fun BuildSteps.runVcrTestRecordingSaveCassettes() {
             echo "${'$'}{GOOGLE_CREDENTIALS}" > google-account.json
             gcloud auth activate-service-account --key-file=sa-key.json
 
-            export BRANCH_NAME = %teamcity.build.branch%
+            export BRANCH_NAME=%teamcity.build.branch%
             gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://ci-vcr-cassettes/fixtures/
             if [ "${'$'}BRANCH_NAME" = "refs/heads/main" ]; then
                 echo "Copying to main"

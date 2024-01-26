@@ -60,7 +60,8 @@ val region          = DslContext.getParameter("region", "")           // GOOGLE_
 val zone            = DslContext.getParameter("zone", "")             // GOOGLE_ZONE
 
 // Used for recording VCR cassettes
-val infraProject            = DslContext.getParameter("infraProject", "") // GOOGLE_INFRA_PROJECT
+val infraProject             = DslContext.getParameter("infraProject", "") // GOOGLE_INFRA_PROJECT
+val vcrBucketName            = DslContext.getParameter("vcrBucketName", "") // VCR_BUCKET_NAME
 
 
 var allContextParams = AllContextParameters(
@@ -95,7 +96,8 @@ var allContextParams = AllContextParameters(
     orgDomain,
     region,
     zone,
-    infraProject
+    infraProject,
+    vcrBucketName
 )
 
 // This is the entry point of the code in .teamcity/

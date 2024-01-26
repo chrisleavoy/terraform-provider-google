@@ -65,6 +65,7 @@ class AllContextParameters(
 
     // VCR specific
     val infraProject: String,     // GOOGLE_INFRA_PROJECT
+    val vcrBucketName: String,    // VCR_BUCKET_NAME
     )
 
 // AccTestConfiguration is used to easily pass values set via Context Parameters into build configurations.
@@ -87,6 +88,7 @@ class AccTestConfiguration(
 
     // VCR specific
     val infraProject: String,
+    val vcrBucketName: String,
     )
 
 fun getGaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfiguration {
@@ -106,7 +108,8 @@ fun getGaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigura
         allConfig.region,
         allConfig.serviceAccountGa,
         allConfig.zone,
-        allConfig.infraProject
+        allConfig.infraProject,
+        allConfig.vcrBucketName
     )
 }
 
@@ -127,7 +130,8 @@ fun getBetaAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigu
         allConfig.region,
         allConfig.serviceAccountBeta,
         allConfig.zone,
-        allConfig.infraProject
+        allConfig.infraProject,
+        allConfig.vcrBucketName
     )
 }
 
@@ -148,7 +152,8 @@ fun getVcrAcceptanceTestConfig(allConfig: AllContextParameters): AccTestConfigur
         allConfig.region,
         allConfig.serviceAccountVcr,
         allConfig.zone,
-        allConfig.infraProject
+        allConfig.infraProject,
+        allConfig.vcrBucketName
     )
 }
 
@@ -211,6 +216,7 @@ fun ParametrizedWithType.vcrEnvironmentVariables(config: AccTestConfiguration, p
     text("env.TEST", "./${providerName}/...")
     text("env.TESTARGS", "-run=%TEST_PREFIX%")
     hiddenVariable("env.GOOGLE_INFRA_PROJECT", config.infraProject, "The project that's linked to the GCS bucket storing VCR cassettes")
+    hiddenVariable("env.VCR_BUCKET_NAME", config.vcrBucketName, "The name of the GCS bucket storing VCR cassettes")
 }
 
 // ParametrizedWithType.terraformLoggingParameters sets environment variables and build parameters that

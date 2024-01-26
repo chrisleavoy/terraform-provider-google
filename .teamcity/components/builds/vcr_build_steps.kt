@@ -21,6 +21,10 @@ fun BuildSteps.checkVcrEnvironmentVariables() {
                 echo "GOOGLE_INFRA_PROJECT is not set"
                 exit 1
             fi
+            if [ "${'$'}VCR_BUCKET_NAME" = "" ]; then
+                echo "VCR_BUCKET_NAME is not set"
+                exit 1
+            fi
             if [ "${'$'}TEST" = "" ]; then
                 echo "TEST is not set - set it to a value like ./google/... or ./google-beta/services/compute"
                 exit 1
@@ -75,12 +79,12 @@ fun BuildSteps.runVcrTestRecordingSetup() {
             gcloud auth activate-service-account --key-file=sa-key.json
 
             # Pull files from GCS
-            gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://ci-vcr-cassettes/fixtures/
+            gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://${'$'}VCR_BUCKET_NAME/fixtures/
             mkdir -p ${'$'}VCR_PATH
-            gsutil -m cp gs://ci-vcr-cassettes/fixtures/* ${'$'}VCR_PATH
+            gsutil -m cp gs://${'$'}VCR_BUCKET_NAME/fixtures/* ${'$'}VCR_PATH
             # copy branch specific cassettes over master. This might fail but that's ok if the folder doesnt exist
             export BRANCH_NAME=%teamcity.build.branch%
-            gsutil -m cp gs://ci-vcr-cassettes/${'$'}BRANCH_NAME/fixtures/* ${'$'}VCR_PATH
+            gsutil -m cp gs://${'$'}VCR_BUCKET_NAME/${'$'}BRANCH_NAME/fixtures/* ${'$'}VCR_PATH
             ls ${'$'}VCR_PATH
 
             # Cleanup
@@ -137,13 +141,13 @@ fun BuildSteps.runVcrTestRecordingSaveCassettes() {
             gcloud auth activate-service-account --key-file=sa-key.json
 
             export BRANCH_NAME=%teamcity.build.branch%
-            gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://ci-vcr-cassettes/fixtures/
+            gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://${'$'}VCR_BUCKET_NAME/fixtures/
             if [ "${'$'}BRANCH_NAME" = "refs/heads/main" ]; then
                 echo "Copying to main"
-                gsutil -m cp ${'$'}VCR_PATH/* gs://ci-vcr-cassettes/fixtures/
+                gsutil -m cp ${'$'}VCR_PATH/* gs://${'$'}VCR_BUCKET_NAME/fixtures/
             else
                 echo "Copying to ${'$'}BRANCH_NAME"
-                gsutil -m cp ${'$'}VCR_PATH/* gs://ci-vcr-cassettes/${'$'}BRANCH_NAME/fixtures/
+                gsutil -m cp ${'$'}VCR_PATH/* gs://${'$'}VCR_BUCKET_NAME/${'$'}BRANCH_NAME/fixtures/
             fi
 
             # Cleanup

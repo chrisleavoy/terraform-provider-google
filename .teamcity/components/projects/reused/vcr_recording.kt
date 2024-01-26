@@ -54,10 +54,9 @@ fun vcrRecording(parentProject:String, providerName: String, hashicorpVcsRoot: G
                     tagBuildToIndicatePurpose()
                     configureGoEnv()
                     downloadTerraformBinary()
-                    // runVcrTestRecordingSetup()
-                    // runVcrAcceptanceTests()
-                    // runVcrTestRecordingSaveCassettes()
-                    testGcloudCLI()
+                    runVcrTestRecordingSetup()
+                    runVcrAcceptanceTests()
+                    runVcrTestRecordingSaveCassettes()
                 }
 
                 features {

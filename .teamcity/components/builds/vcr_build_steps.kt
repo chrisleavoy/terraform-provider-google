@@ -55,7 +55,13 @@ fun BuildSteps.checkVcrEnvironmentVariables() {
 fun BuildSteps.runVcrAcceptanceTests() {
     step(ScriptBuildStep {
         name = "Run Tests"
-        scriptContent =  "go test ${'$'}TESTARGS -v ${'$'}TESTARGS -timeout=\"%TIMEOUT%h\" -test.parallel=\"%PARALLELISM%\" -ldflags=\"-X=github.com/hashicorp/terraform-provider-google/version.ProviderVersion=acc\""
+        scriptContent =  """
+        pwd
+        echo "TESTARGS = ${'$'}TESTARGS"
+        echo "TEST = ${'$'}TEST"
+
+        go test ${'$'}TEST -v ${'$'}TESTARGS -timeout=\"%TIMEOUT%h\" -test.parallel=\"%PARALLELISM%\" -ldflags=\"-X=github.com/hashicorp/terraform-provider-google-beta/version.ProviderVersion=acc\"
+        """.trimIndent()
     })
 }
 

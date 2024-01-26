@@ -60,7 +60,7 @@ fun BuildSteps.runVcrAcceptanceTests() {
         echo "TESTARGS = ${'$'}TESTARGS"
         echo "TEST = ${'$'}TEST"
 
-        go test ${'$'}TEST -v ${'$'}TESTARGS -timeout=\"%TIMEOUT%h\" -test.parallel=\"%PARALLELISM%\" -ldflags=\"-X=github.com/hashicorp/terraform-provider-google-beta/version.ProviderVersion=acc\"
+        go test ${'$'}TEST -v ${'$'}TESTARGS -timeout="%TIMEOUT%h" -test.parallel="%PARALLELISM%" -ldflags="-X=github.com/hashicorp/terraform-provider-google-beta/version.ProviderVersion=acc"
         """.trimIndent()
     })
 }

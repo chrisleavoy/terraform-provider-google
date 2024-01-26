@@ -76,7 +76,7 @@ fun BuildSteps.runVcrTestRecordingSetup() {
 
             # Authenticate gcloud CLI
             echo "${'$'}{GOOGLE_CREDENTIALS}" > google-account.json
-            gcloud auth activate-service-account --key-file=sa-key.json
+            gcloud auth activate-service-account --key-file=google-account.json
 
             # Pull files from GCS
             gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://${'$'}VCR_BUCKET_NAME/fixtures/
@@ -138,7 +138,7 @@ fun BuildSteps.runVcrTestRecordingSaveCassettes() {
             # RECORDING MODE - push new cassettes to GCS
             # Authenticate gcloud CLI
             echo "${'$'}{GOOGLE_CREDENTIALS}" > google-account.json
-            gcloud auth activate-service-account --key-file=sa-key.json
+            gcloud auth activate-service-account --key-file=google-account.json
 
             export BRANCH_NAME=%teamcity.build.branch%
             gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://${'$'}VCR_BUCKET_NAME/fixtures/

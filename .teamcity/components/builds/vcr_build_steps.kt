@@ -73,6 +73,10 @@ fun BuildSteps.runVcrTestRecordingSetup() {
             echo "VCR TESTING SETUP"
             echo "VCR_PATH: ${'$'}{VCR_PATH}"
             echo "VCR_MODE: ${'$'}{VCR_MODE}"
+            
+            # Ensure directory exists regardless of VCR mode
+            mkdir -p ${'$'}VCR_PATH
+            
             if [ "${'$'}VCR_MODE" = "RECORDING" ]; then
                 echo "Recording mode, skipping cassette retrieval"
                 exit 0
@@ -86,7 +90,6 @@ fun BuildSteps.runVcrTestRecordingSetup() {
 
             # Pull files from GCS
             gsutil ls -p ${'$'}GOOGLE_INFRA_PROJECT gs://${'$'}VCR_BUCKET_NAME/fixtures/
-            mkdir -p ${'$'}VCR_PATH
             gsutil -m cp gs://${'$'}VCR_BUCKET_NAME/fixtures/* ${'$'}VCR_PATH
             # copy branch specific cassettes over master. This might fail but that's ok if the folder doesnt exist
             export BRANCH_NAME=%teamcity.build.branch%

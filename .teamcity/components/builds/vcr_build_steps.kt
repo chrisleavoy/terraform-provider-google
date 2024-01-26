@@ -109,19 +109,21 @@ fun BuildSteps.runVcrTestRecordingSetup() {
     })
 }
 
-fun BuildSteps.testGcloudCLI() {
+fun BuildSteps.testVcrStuff() {
     step(ScriptBuildStep {
-        name = "Tasks after running VCR tests: if in RECORDING mode, push new cassettes to GCS"
+        name = "Testing stuff for VCR tests"
         scriptContent = """
             #!/bin/bash
-            echo "Testing gcloud and gsutil CLIs"
+            echo "Testing stuff for VCR tests"
+            mkdir -p ${'$'}VCR_PATH
 
-            which gcloud
-            which gsutil
+            pwd
+            ls
+            ls ${'$'}VCR_PATH
+            ls ${'$'}GOPATH/src/
 
-            gcloud version
-            gsutil version
 
+            
             echo "Finished"
         """.trimIndent()
         // ${'$'} is required to allow creating a script in TeamCity that contains

@@ -53,10 +53,11 @@ fun vcrRecording(parentProject:String, providerName: String, hashicorpVcsRoot: G
                     setGitCommitBuildId()
                     tagBuildToIndicatePurpose()
                     configureGoEnv()
-                    downloadTerraformBinary()
-                    runVcrTestRecordingSetup()
-                    runVcrAcceptanceTests()
-                    runVcrTestRecordingSaveCassettes()
+//                    downloadTerraformBinary()
+//                    runVcrTestRecordingSetup()
+//                    runVcrAcceptanceTests()
+//                    runVcrTestRecordingSaveCassettes()
+                    testVcrStuff()
                 }
 
                 features {
